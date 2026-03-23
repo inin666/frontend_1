@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive, unref } from 'vue'
+import type { StudentProfile } from '../../domain/student/types'
+import RegistrationAvatarField from './RegistrationAvatarField.vue'
+import { useRegistrationAvatar } from '../../uni-app/composables/useRegistrationAvatar'
 
-interface RegistrationPayload {
-  studentId: string
-  name: string
-  gender: string
-  age: number
-  major: string
-  grade: string
-  heightCm: number
-  weightKg: number
-  restingHeartRate: number
-}
+type RegistrationPayload = Omit<StudentProfile, 'completed'>
 
 const emit = defineEmits<{
   submit: [payload: RegistrationPayload]
 }>()
 
+const avatar = useRegistrationAvatar()
 const form = reactive<RegistrationPayload>({
+  avatarUrl: '',
+  avatarSource: '',
   studentId: '',
   name: '',
   gender: '',
@@ -31,6 +27,12 @@ const form = reactive<RegistrationPayload>({
 
 const genderOptions = ['Female', 'Male', 'Other']
 const gradeOptions = ['Year 1', 'Year 2', 'Year 3', 'Year 4']
+
+const currentAvatarUrl = computed(() => unref(avatar.avatarUrl) ?? '')
+const currentAvatarSource = computed(() => unref(avatar.avatarSource) ?? '')
+const currentAvatarUploadState = computed(() => unref(avatar.uploadState) ?? 'idle')
+const currentAvatarErrorMessage = computed(() => unref(avatar.errorMessage) ?? '')
+const showWechatAvatarButton = computed(() => Boolean(unref(avatar.isWechatMiniProgram)))
 
 const selectedGenderIndex = computed(() => {
   const index = genderOptions.indexOf(form.gender)
@@ -51,6 +53,8 @@ const canSubmit = computed(() => {
     form.gender.trim().length > 0 &&
     form.major.trim().length > 0 &&
     form.grade.trim().length > 0 &&
+    currentAvatarUrl.value.trim().length > 0 &&
+    currentAvatarUploadState.value === 'success' &&
     form.age > 0 &&
     form.heightCm > 0 &&
     form.weightKg > 0 &&
@@ -63,7 +67,11 @@ function handleSubmit() {
     return
   }
 
-  emit('submit', { ...form })
+  emit('submit', {
+    ...form,
+    avatarUrl: currentAvatarUrl.value,
+    avatarSource: currentAvatarSource.value
+  })
 }
 
 function handleGenderChange(event: { detail?: { value?: string | number } }) {
@@ -83,21 +91,27 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
   <form class="flex flex-col gap-[32rpx]" @submit.prevent="handleSubmit">
     <view class="form-card form-card--gold">
       <view class="form-card__header">
-        <view class="form-card__sticker form-card__sticker--gold">
-          <text class="text-[40rpx]">👤</text>
-        </view>
         <view class="form-card__heading">
           <text class="form-card__kicker form-card__kicker--gold">Basic Info</text>
           <text class="form-card__title">Tell us who is joining today.</text>
         </view>
       </view>
+
+      <RegistrationAvatarField
+        :avatar-url="currentAvatarUrl"
+        :upload-state="currentAvatarUploadState"
+        :error-message="currentAvatarErrorMessage"
+        :is-wechat-mini-program="showWechatAvatarButton"
+        @choose-wechat-avatar="avatar.handleWechatAvatarChoice"
+        @choose-image="avatar.openImageSourceActionSheet"
+      />
       
-      <view class="flex flex-col gap-[16rpx]">
+      <view class="form-stack-field">
         <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Student ID</text>
         <input v-model.trim="form.studentId" autocomplete="username" class="input-shell registration-input-shell" name="studentId" placeholder="E.g. S-001" />
       </view>
 
-      <view class="flex flex-col gap-[16rpx]">
+      <view class="form-stack-field">
         <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Full Name</text>
         <input v-model.trim="form.name" autocomplete="name" class="input-shell registration-input-shell" name="name" placeholder="E.g. Sporty Sam" />
       </view>
@@ -170,7 +184,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
         </view>
       </view>
 
-      <view class="flex flex-col gap-[16rpx]">
+      <view class="form-stack-field">
         <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Resting HR (bpm)</text>
         <input v-model.number="form.restingHeartRate" autocomplete="off" class="input-shell registration-input-shell" min="1" name="restingHeartRate" placeholder="70" type="number" />
       </view>
@@ -198,9 +212,18 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
   min-width: 0;
 }
 
+.form-stack-field {
+  display: flex;
+  width: 100%;
+  max-width: 480rpx;
+  align-self: flex-start;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
 .registration-input-shell {
   width: 100%;
-  max-width: 560rpx;
+  max-width: 100%;
   align-self: flex-start;
 }
 
@@ -211,7 +234,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
 .registration-picker-shell {
   display: flex;
   width: 100%;
-  max-width: 560rpx;
+  max-width: 520rpx;
   align-self: flex-start;
 }
 
