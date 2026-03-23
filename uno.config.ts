@@ -8,14 +8,20 @@ export default defineConfig({
       'src/uni-app/**/*.{html,ts,tsx,vue}'
     ]
   },
+  rules: [
+    ['chunky-shadow', { 'box-shadow': '0 8px 0px rgba(0, 0, 0, 0.05)' }],
+    ['chunky-shadow-sm', { 'box-shadow': '0 6px 0px rgba(0, 0, 0, 0.08)' }],
+  ],
   shortcuts: {
-    'card-shell': 'rounded-[32px] bg-white p-6 shadow-sm border border-[#F0E6D8]',
-    'section-title': 'text-[56rpx] font-black tracking-tight text-[#1A202C]',
-    'chip-soft': 'inline-flex items-center rounded-full px-6 py-2.5 text-[32rpx] font-black uppercase tracking-widest',
-    
-    // NEW FORMS STYLES
-    'input-shell': 'w-full rounded-full bg-white border-[3px] border-[#FFEAC2] h-[58px] px-6 text-[40rpx] text-[#1A202C] font-bold focus:border-[#FFD384] focus:ring-4 focus:ring-[#FFEAC2]/50 placeholder:text-[#94A3B8] transition-all',
-    'btn-primary': 'w-full h-[64px] bg-[#FF8B8B] text-white flex items-center justify-center rounded-full shadow-[0_6px_0px_#DE6E6E] active:translate-y-1 active:shadow-none transition-all font-black text-[44rpx] disabled:opacity-50 disabled:shadow-none disabled:translate-y-1',
+    'card-shell': 'rounded-[48rpx] bg-white p-[36rpx] border-[8rpx] border-[#FFEAC2]/45 shadow-[0_12rpx_0_rgba(0,0,0,0.05)]',
+    'section-title': 'text-[52rpx] font-900 tracking-[-0.03em] leading-tight text-[#1A202C]',
+    'chip-soft': 'inline-flex items-center rounded-full px-[24rpx] py-[12rpx] text-[24rpx] font-900 uppercase tracking-[0.16em]',
+    'bouncy-btn': 'transition-transform active:translate-y-1 active:shadow-none',
+
+    // FORM STYLES
+    'input-shell': 'w-full rounded-full bg-slate-50 border-[6rpx] border-[#FFEAC2] min-h-[100rpx] px-[32rpx] text-[32rpx] text-[#1A202C] font-700 placeholder:text-[#94A3B8] transition-[border-color,box-shadow,transform] duration-150',
+    'btn-primary': 'w-full min-h-[108rpx] bg-[#FF8B8B] text-white flex items-center justify-center rounded-full shadow-[0_10rpx_0_#DE6E6E] active:translate-y-1 active:shadow-[0_4rpx_0_#DE6E6E] transition-[transform,box-shadow,background-color] duration-150 font-900 text-[34rpx] disabled:opacity-50 disabled:shadow-none disabled:translate-y-1',
+    'btn-secondary': 'w-full min-h-[108rpx] bg-white text-[#1A202C] flex items-center justify-center rounded-full border-[6rpx] border-[#E2E8F0] shadow-[0_8rpx_0_rgba(0,0,0,0.05)] active:translate-y-1 active:shadow-[0_4rpx_0_rgba(0,0,0,0.05)] transition-[transform,box-shadow,background-color] duration-150 font-800 text-[32rpx]',
   },
   theme: {
     colors: {
@@ -24,7 +30,8 @@ export default defineConfig({
         gold: '#FFD384',
         teal: '#89CFFF',
         ink: '#1A202C',
-        cream: '#FCF7F0'
+        cream: '#FCF7F0',
+        leaf: '#A8E6CF',
       }
     }
   },
