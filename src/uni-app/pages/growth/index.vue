@@ -84,7 +84,7 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 .growth-page__header {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 28rpx;
 }
 
 .growth-page__eyebrow {
@@ -122,7 +122,7 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 }
 
 .growth-page__section {
-  padding: 36rpx;
+  padding: 40rpx;
 }
 
 .growth-page__section-shell {

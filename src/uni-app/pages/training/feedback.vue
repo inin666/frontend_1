@@ -83,6 +83,7 @@ function goGrowthCenter() {
   display: flex;
   flex-direction: column;
   gap: 24rpx;
+  margin-top: 40rpx;
 }
 
 .feedback-page__primary-action,

@@ -84,7 +84,7 @@ onShow(() => {
 .home-page__hero {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 28rpx;
 }
 
 .home-page__hero-tag {
@@ -118,7 +118,7 @@ onShow(() => {
 }
 
 .home-page__actions {
-  margin-top: 36rpx;
+  margin-top: 44rpx;
   display: flex;
   gap: 24rpx;
 }
