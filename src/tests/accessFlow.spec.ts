@@ -1,4 +1,4 @@
-import { createInitialStudentState } from '../domain/student/state'
+import { completeStudentProfile, createInitialStudentState } from '../domain/student/state'
 import type { StudentAppState } from '../types/student'
 
 describe('student access flow', () => {
@@ -16,6 +16,26 @@ describe('student access flow', () => {
     const { resolveEntryRoute } = await loadResolver()
 
     expect(resolveEntryRoute(createInitialStudentState())).toBe('/register')
+  })
+
+  it('initializes avatar fields on the empty profile', () => {
+    const state = createInitialStudentState()
+
+    expect(state.profile.avatarUrl).toBe('')
+    expect(state.profile.avatarSource).toBe('')
+  })
+
+  it('preserves avatar metadata when completing a student profile', () => {
+    const state = createInitialStudentState()
+    const nextState = completeStudentProfile(state, {
+      ...state.profile,
+      avatarUrl: 'https://cdn.example.com/avatar.png',
+      avatarSource: 'wechat',
+      completed: true
+    } as typeof state.profile)
+
+    expect(nextState.profile.avatarUrl).toBe('https://cdn.example.com/avatar.png')
+    expect(nextState.profile.avatarSource).toBe('wechat')
   })
 
   it('routes newly registered students to the baseline questionnaire', async () => {

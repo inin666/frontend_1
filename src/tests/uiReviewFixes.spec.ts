@@ -380,7 +380,8 @@ describe('ui review fixes', () => {
 
     expect(registrationForm).toContain('registration-input-shell')
     expect(registrationForm).toContain('registration-picker-shell')
-    expect(registrationForm).toContain('max-width: 560rpx;')
+    expect(registrationForm).toContain('form-stack-field')
+    expect(registrationForm).toContain('max-width: 480rpx;')
     expect(registrationForm).toContain('align-self: flex-start;')
     expect(registrationForm).not.toContain('class="w-full"')
   })
@@ -559,13 +560,19 @@ describe('ui review fixes', () => {
     expect(sessionFeedbackCard).toContain('session-feedback-card__stats')
     expect(sessionFeedbackCard).toContain('session-feedback-card__score-tile')
     expect(sessionFeedbackCard).toContain('session-feedback-card__summary-tile')
+    expect(sessionFeedbackCard).toContain('session-feedback-card__sticker')
+    expect(sessionFeedbackCard).toContain('margin-top: 56rpx;')
     expect(feedbackPage).toContain('feedback-page__actions')
     expect(feedbackPage).toContain('feedback-page__secondary-action')
+    expect(feedbackPage).toContain('margin-top: 1.75rem;')
     expect(miniappFeedbackPage).toContain('feedback-page__actions')
+    expect(miniappFeedbackPage).toContain('margin-top: 40rpx;')
     expect(miniappFeedbackPage).not.toContain('<div class="flex gap-12">')
     expect(resultCard).toContain('result-card__hero-badge')
     expect(resultCard).toContain('result-card__summary-grid')
     expect(resultCard).toContain('result-card__score-tile')
+    expect(resultCard).toContain('result-card__sticker')
+    expect(resultCard).toContain('margin-top: 64rpx;')
   })
 
   it('routes every rounded questionnaire option through the short check-in surface only', () => {
@@ -582,5 +589,98 @@ describe('ui review fixes', () => {
     expect(shortQuestionnaireForm).toContain('short-questionnaire-form__options')
     expect(shortQuestionnaireForm).toContain('short-questionnaire-form__option')
     expect(longQuestionnaireForm).not.toContain('rating-option--rounded')
+  })
+
+  it('gives long-questionnaire prompts and actions more breathing room', () => {
+    const longQuestionnaireForm = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/LongQuestionnaireForm.vue'),
+      'utf8'
+    )
+
+    expect(longQuestionnaireForm).toContain('long-questionnaire-form__card')
+    expect(longQuestionnaireForm).toContain('long-questionnaire-form__prompt')
+    expect(longQuestionnaireForm).toContain('long-questionnaire-form__options')
+    expect(longQuestionnaireForm).toContain('long-questionnaire-form__actions')
+    expect(longQuestionnaireForm).toContain('gap: 40rpx;')
+    expect(longQuestionnaireForm).toContain('margin-bottom: 40rpx;')
+    expect(longQuestionnaireForm).toContain('padding-bottom: 72rpx;')
+  })
+
+  it('relaxes shared shell and entry-page spacing across the app', () => {
+    const accessShell = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/AccessPageShell.vue'),
+      'utf8'
+    )
+    const uniAccessShell = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/components/access/UniAccessPageShell.vue'),
+      'utf8'
+    )
+    const uniTrainingShell = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/components/training/UniTrainingPageShell.vue'),
+      'utf8'
+    )
+    const uniGrowthShell = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/components/growth/UniGrowthPageShell.vue'),
+      'utf8'
+    )
+    const webHomePage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/views/training/HomePage.vue'),
+      'utf8'
+    )
+    const miniappHomePage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages/training/home.vue'),
+      'utf8'
+    )
+    const webSelectPage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/views/training/TrainingSelectionPage.vue'),
+      'utf8'
+    )
+    const webGrowthPage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/views/growth/GrowthCenterView.vue'),
+      'utf8'
+    )
+    const miniappGrowthPage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages/growth/index.vue'),
+      'utf8'
+    )
+
+    expect(accessShell).toContain('padding: 56rpx 48rpx 216rpx;')
+    expect(accessShell).toContain('gap: 56rpx;')
+    expect(uniAccessShell).toContain('padding: 56rpx 48rpx 120rpx;')
+    expect(uniAccessShell).toContain('gap: 40rpx;')
+    expect(uniTrainingShell).toContain('padding: 56rpx 32rpx 96rpx;')
+    expect(uniTrainingShell).toContain('gap: 36rpx;')
+    expect(uniGrowthShell).toContain('padding: 56rpx 32rpx 96rpx;')
+    expect(uniGrowthShell).toContain('gap: 40rpx;')
+    expect(webHomePage).toContain('gap-22')
+    expect(webHomePage).toContain('py-32')
+    expect(webHomePage).toContain('margin-top: 1.5rem;')
+    expect(miniappHomePage).toContain('gap: 28rpx;')
+    expect(miniappHomePage).toContain('margin-top: 44rpx;')
+    expect(webSelectPage).toContain('gap: 1.5rem;')
+    expect(webSelectPage).toContain('padding: 2rem 1.25rem 2.5rem;')
+    expect(webGrowthPage).toContain('gap: 1.5rem;')
+    expect(webGrowthPage).toContain('padding: 1.75rem 1.25rem 2.5rem;')
+    expect(miniappGrowthPage).toContain('gap: 28rpx;')
+    expect(miniappGrowthPage).toContain('padding: 40rpx;')
+  })
+
+  it('wires the register avatar flow to WeChat avatar and image upload APIs', () => {
+    const avatarField = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/RegistrationAvatarField.vue'),
+      'utf8'
+    )
+    const avatarComposable = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/composables/useRegistrationAvatar.ts'),
+      'utf8'
+    )
+
+    expect(avatarField).toContain('open-type="chooseAvatar"')
+    expect(avatarField).toContain('@chooseavatar=')
+    expect(avatarComposable).toContain('detail?.avatarUrl')
+    expect(avatarComposable).toContain('uni.chooseImage')
+    expect(avatarComposable).toContain('sourceType: [source]')
+    expect(avatarComposable).toContain('uni.uploadFile')
+    expect(avatarComposable).toContain("name: 'file'")
   })
 })
