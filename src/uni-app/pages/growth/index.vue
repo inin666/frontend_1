@@ -22,119 +22,165 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 
 <template>
   <UniGrowthPageShell>
-    <header class="growth-page__header">
-      <h1 class="growth-page__title">Growth Center</h1>
-      <p class="growth-page__subtitle">
+    <view class="growth-page__header">
+      <view class="growth-page__eyebrow">
+        <text>Progress Playground</text>
+      </view>
+      <text class="growth-page__title">Growth Center</text>
+      <text class="growth-page__subtitle">
         Track your training consistency, assessments, and achievements.
-      </p>
-      <span class="growth-page__link growth-page__link--current">Current page</span>
-    </header>
+      </text>
+      <text class="growth-page__link growth-page__link--current">Current page</text>
+    </view>
 
     <GrowthSummaryCards
       :cards="summary.summaryCards"
       :latest-assessment="summary.latestAssessment"
     />
 
-    <section class="growth-page__section">
-      <div class="growth-page__section-head">
-        <h2 class="growth-page__section-title">Adherence Calendar</h2>
+    <view class="growth-page__section growth-page__section-shell">
+      <view class="growth-page__section-head">
+        <text class="growth-page__section-title">Adherence Calendar</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('adherence')">
-          View details
+          <text>View details</text>
         </button>
-      </div>
+      </view>
       <AdherenceHeatmap :days="summary.adherenceCalendar" />
-    </section>
+    </view>
 
-    <section class="growth-page__section">
-      <div class="growth-page__section-head">
-        <h2 class="growth-page__section-title">Achievements</h2>
+    <view class="growth-page__section growth-page__section-shell">
+      <view class="growth-page__section-head">
+        <text class="growth-page__section-title">Achievements</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('achievements')">
-          View details
+          <text>View details</text>
         </button>
-      </div>
+      </view>
       <AchievementBadgeList :achievements="summary.achievements" />
-    </section>
+    </view>
 
-    <section class="growth-page__section">
-      <div class="growth-page__section-head">
-        <h2 class="growth-page__section-title">Physical Metrics</h2>
+    <view class="growth-page__section growth-page__section-shell">
+      <view class="growth-page__section-head">
+        <text class="growth-page__section-title">Physical Metrics</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('metrics')">
-          View details
+          <text>View details</text>
         </button>
-      </div>
+      </view>
       <PhysicalMetricsPanel :metrics-state="physicalMetricsState" />
-    </section>
+    </view>
 
-    <section class="growth-page__section">
-      <div class="growth-page__section-head">
-        <h2 class="growth-page__section-title">History</h2>
+    <view class="growth-page__section growth-page__section-shell">
+      <view class="growth-page__section-head">
+        <text class="growth-page__section-title">History</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('history')">
-          View details
+          <text>View details</text>
         </button>
-      </div>
-      <p class="growth-page__subtitle">Open session and questionnaire history.</p>
-    </section>
+      </view>
+      <text class="growth-page__subtitle">Open session and questionnaire history.</text>
+    </view>
   </UniGrowthPageShell>
 </template>
 
 <style scoped>
 .growth-page__header {
-  display: grid;
-  gap: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.growth-page__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 24rpx;
+  border-radius: 9999px;
+  border: 4rpx solid rgba(255, 211, 132, 0.24);
+  background: rgba(255, 211, 132, 0.16);
+  color: #D97706;
+  font-size: 24rpx;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .growth-page__title {
+  display: block;
   margin: 0;
-  color: #1f3568;
+  font-size: 72rpx;
+  font-weight: 900;
+  color: #1A202C;
+  letter-spacing: -0.03em;
 }
 
 .growth-page__subtitle {
+  display: block;
   margin: 0;
-  color: #566884;
-  font-size: 0.9rem;
+  color: #64748B;
+  font-size: 34rpx;
+  line-height: 1.5;
+  font-weight: 700;
 }
 
 .growth-page__section {
-  border: 1px solid #d8e3f8;
-  border-radius: 12px;
-  padding: 0.85rem;
-  background: #fbfdff;
+  padding: 36rpx;
+}
+
+.growth-page__section-shell {
+  border: 8rpx solid rgba(255, 211, 132, 0.24);
+  border-radius: 48rpx;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12rpx 0 rgba(0, 0, 0, 0.05);
 }
 
 .growth-page__section-head {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 0.6rem;
-  margin-bottom: 0.65rem;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
 }
 
 .growth-page__section-title {
+  display: block;
   margin: 0;
-  font-size: 1rem;
-  color: #243f72;
+  font-size: 38rpx;
+  font-weight: 900;
+  color: #1A202C;
 }
 
 .growth-page__link {
-  color: #355fb4;
-  font-size: 0.8rem;
+  color: #2B7CB8;
+  font-size: 24rpx;
+  font-weight: 900;
   text-decoration: none;
   border-radius: 9999px;
-  padding: 0.2rem 0.45rem;
+  padding: 12rpx 24rpx;
+  border: 4rpx solid rgba(137, 207, 255, 0.24);
+  background: rgba(137, 207, 255, 0.12);
   border: none;
-  background: transparent;
   transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+  min-height: 0;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.growth-page__link::after {
+  display: none;
 }
 
 .growth-page__link--current {
-  background: #eaf1ff;
-  color: #1f3568;
+  display: inline-block;
+  width: fit-content;
+  color: #065F46;
+  border-color: rgba(168, 230, 207, 0.3);
+  background: rgba(168, 230, 207, 0.22);
   width: fit-content;
 }
 
 .growth-page__link:active {
-  color: #1f3568;
-  background: #eaf1ff;
+  color: #1A202C;
+  background: rgba(255, 211, 132, 0.16);
   transform: scale(0.98);
 }
 </style>
