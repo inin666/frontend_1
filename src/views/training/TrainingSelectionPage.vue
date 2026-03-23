@@ -16,11 +16,13 @@ function chooseMode(modality: TrainingModality) {
 </script>
 
 <template>
-  <main class="mx-auto flex min-h-screen max-w-420 flex-col gap-18 px-20 py-24">
-    <section class="card-shell p-20">
+  <main class="select-page">
+    <section class="card-shell select-page__hero-card">
+      <div class="select-page__hero-tag">Session Arcade</div>
+      <div class="select-page__hero-sticker">🎮</div>
       <p class="section-title">Pick your session</p>
-      <p class="mt-10 text-17 leading-7 text-slate-600">
-        Every session can be a new modality choice.
+      <p class="select-page__hero-copy text-17 leading-7 text-slate-600">
+        Choose one playful training mode. Each card should feel like a mini game, not a bland form step.
       </p>
     </section>
 
@@ -47,3 +49,64 @@ function chooseMode(modality: TrainingModality) {
     />
   </main>
 </template>
+
+<style scoped>
+.select-page {
+  margin: 0 auto;
+  display: flex;
+  min-height: 100vh;
+  max-width: 420px;
+  flex-direction: column;
+  gap: 1.125rem;
+  padding: 1.5rem 1.25rem;
+}
+
+.select-page__hero-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+.select-page__hero-tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 3px solid rgba(137, 207, 255, 0.26);
+  background: rgba(137, 207, 255, 0.14);
+  color: #2B7CB8;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.select-page__hero-sticker {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  width: 3.6rem;
+  height: 3.6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 4px solid #ffffff;
+  background: rgba(255, 211, 132, 0.9);
+  box-shadow: 0 10px 0 rgba(255, 211, 132, 0.28);
+  font-size: 1.7rem;
+}
+
+.select-page__hero-copy {
+  margin: 0;
+  max-width: 18rem;
+  color: #64748B;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 700;
+}
+</style>

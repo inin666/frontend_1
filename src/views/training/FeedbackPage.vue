@@ -32,23 +32,23 @@ refreshReminderEligibility()
 </script>
 
 <template>
-  <main class="mx-auto flex min-h-screen max-w-420 flex-col gap-18 px-20 py-24">
+  <main class="feedback-page">
     <SessionFeedbackCard
       :modality-label="modalityLabel"
       :quality-score="session?.analysis.qualityScore ?? 0"
       :summary="session?.analysis.summary ?? 'Great work finishing the guided flow.'"
     />
 
-    <div class="flex gap-12">
+    <div class="feedback-page__actions">
       <button
-        class="flex-1 rounded-full border-none bg-brand-coral px-16 py-14 text-15 font-700 text-white"
+        class="btn-primary feedback-page__primary-action"
         type="button"
         @click="router.push('/home')"
       >
         Back home
       </button>
       <button
-        class="rounded-full border-none bg-slate-100 px-16 py-14 text-15 font-600 text-slate-600"
+        class="btn-secondary feedback-page__secondary-action"
         type="button"
         @click="router.push('/growth')"
       >
@@ -57,3 +57,26 @@ refreshReminderEligibility()
     </div>
   </main>
 </template>
+
+<style scoped>
+.feedback-page {
+  margin: 0 auto;
+  display: flex;
+  min-height: 100vh;
+  max-width: 420px;
+  flex-direction: column;
+  gap: 1.125rem;
+  padding: 1.5rem 1.25rem;
+}
+
+.feedback-page__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feedback-page__primary-action,
+.feedback-page__secondary-action {
+  width: 100%;
+}
+</style>
