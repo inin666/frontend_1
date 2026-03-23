@@ -13,43 +13,48 @@ const orderedHistory = computed(() => {
 </script>
 
 <template>
-  <section class="assessment" aria-label="Assessment history">
-    <ul class="assessment__list">
-      <li v-for="checkpoint in orderedHistory" :key="checkpoint.checkpoint" class="assessment-item">
-        <p class="assessment-item__name">{{ checkpoint.checkpoint.toUpperCase() }}</p>
-        <p class="assessment-item__result">
+  <view class="assessment" aria-label="Assessment history">
+    <view class="assessment__list">
+      <view v-for="checkpoint in orderedHistory" :key="checkpoint.checkpoint" class="assessment-item">
+        <text class="assessment-item__name block">{{ checkpoint.checkpoint.toUpperCase() }}</text>
+        <text class="assessment-item__result block">
           {{ checkpoint.completed ? `Score ${checkpoint.score} · ${checkpoint.percentage}%` : 'Not completed yet' }}
-        </p>
-      </li>
-    </ul>
-  </section>
+        </text>
+      </view>
+    </view>
+  </view>
 </template>
 
 <style scoped>
 .assessment__list {
   margin: 0;
   padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
 }
 
 .assessment-item {
-  border-radius: 10px;
-  border: 1px solid #dbe6f8;
-  padding: 0.65rem 0.7rem;
+  border-radius: 48rpx;
+  border: 8rpx solid rgba(255, 211, 132, 0.2);
+  padding: 32rpx 40rpx;
   background: #fff;
+  box-shadow: 0 12rpx 0px rgba(0, 0, 0, 0.04);
 }
 
 .assessment-item__name {
   margin: 0;
-  font-weight: 600;
-  color: #264377;
+  font-weight: 900;
+  color: #1A202C;
+  font-size: 32rpx;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .assessment-item__result {
-  margin: 0.25rem 0 0;
-  font-size: 0.8rem;
-  color: #556887;
+  margin: 16rpx 0 0;
+  font-size: 28rpx;
+  color: #64748B;
+  font-weight: 700;
 }
 </style>

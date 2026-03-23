@@ -7,60 +7,69 @@ defineProps<{
 </script>
 
 <template>
-  <section class="history" aria-label="Training history">
-    <p v-if="sessions.length === 0" class="history__empty">No completed sessions yet.</p>
+  <view class="history" aria-label="Training history">
+    <text v-if="sessions.length === 0" class="history__empty block">No completed sessions yet.</text>
 
-    <ul v-else class="history__list">
-      <li v-for="session in sessions" :key="session.id" class="history-item">
-        <p class="history-item__headline">
+    <view v-else class="history__list">
+      <view v-for="session in sessions" :key="session.id" class="history-item">
+        <text class="history-item__headline block">
           {{ session.modality.toUpperCase() }} · {{ session.date }}
-        </p>
-        <p class="history-item__subline">{{ session.analysis.summary }}</p>
-        <p class="history-item__meta">Quality score: {{ session.analysis.qualityScore }}</p>
-      </li>
-    </ul>
-  </section>
+        </text>
+        <text class="history-item__subline block">{{ session.analysis.summary }}</text>
+        <text class="history-item__meta block">Quality score: {{ session.analysis.qualityScore }}</text>
+      </view>
+    </view>
+  </view>
 </template>
 
 <style scoped>
 .history__empty {
   margin: 0;
-  padding: 0.8rem;
-  border-radius: 10px;
-  border: 1px dashed #bfd2ef;
-  color: #566782;
+  padding: 40rpx;
+  border-radius: 48rpx;
+  border: 8rpx dashed rgba(255, 211, 132, 0.3);
+  color: #64748B;
+  font-weight: 600;
+  background: rgba(255, 211, 132, 0.06);
+  font-size: 28rpx;
 }
 
 .history__list {
-  display: grid;
-  gap: 0.6rem;
-  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
   margin: 0;
   padding: 0;
 }
 
 .history-item {
-  border-radius: 10px;
-  border: 1px solid #d8e5fa;
+  border-radius: 48rpx;
+  border: 8rpx solid rgba(137, 207, 255, 0.2);
   background: #fff;
-  padding: 0.7rem;
+  padding: 40rpx;
+  box-shadow: 0 12rpx 0px rgba(0, 0, 0, 0.04);
 }
 
 .history-item__headline {
   margin: 0;
-  color: #1d366c;
-  font-weight: 600;
+  color: #1A202C;
+  font-weight: 900;
+  font-size: 32rpx;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .history-item__subline {
-  margin: 0.25rem 0 0;
-  color: #4b5f82;
-  font-size: 0.82rem;
+  margin: 16rpx 0 0;
+  color: #64748B;
+  font-size: 28rpx;
+  font-weight: 600;
 }
 
 .history-item__meta {
-  margin: 0.25rem 0 0;
-  color: #5c6f90;
-  font-size: 0.78rem;
+  margin: 16rpx 0 0;
+  color: #FF8B8B;
+  font-size: 26rpx;
+  font-weight: 900;
 }
 </style>
