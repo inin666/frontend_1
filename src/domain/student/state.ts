@@ -12,6 +12,8 @@ import { cloneStudentValue } from './clone'
 import { completeGuidedSession, evaluateReminderEligibility } from './training'
 
 const EMPTY_PROFILE: StudentProfile = {
+  avatarUrl: '',
+  avatarSource: '',
   studentId: '',
   name: '',
   gender: '',
