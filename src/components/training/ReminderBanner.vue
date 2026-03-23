@@ -5,13 +5,39 @@ defineProps<{
 </script>
 
 <template>
-  <section
+  <view
     v-if="visible"
-    class="card-shell border-1 border-brand-gold/40 bg-brand-gold/12 p-18 text-brand-ink"
+    class="card-shell reminder-banner border-[8rpx] border-brand-gold/30 bg-brand-gold/10 text-brand-ink"
   >
-    <p class="text-15 font-800 tracking-[0.16em] uppercase">Reminder return</p>
-    <p class="mt-10 text-17 leading-7">
+    <view class="reminder-banner__eyebrow text-[36rpx] font-900 tracking-[0.16em] uppercase">
+      <text>Reminder return</text>
+    </view>
+    <text class="block mt-[16rpx] text-[32rpx] leading-snug font-700">
       You came back from the 18:00 reminder. One more short session keeps today moving.
-    </p>
-  </section>
+    </text>
+  </view>
 </template>
+
+<style scoped>
+.reminder-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.reminder-banner__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 20rpx;
+  border-radius: 9999px;
+  border: 4rpx solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.28);
+  color: #B45309;
+  font-size: 28rpx;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+</style>

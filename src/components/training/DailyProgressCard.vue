@@ -9,39 +9,95 @@ const progressSegments = [1, 2, 3]
 </script>
 
 <template>
-  <section class="card-shell p-20">
-    <div class="flex items-center justify-between gap-12">
-      <div>
-        <p class="section-title">Today&apos;s energy loop</p>
-        <p class="mt-10 text-[44rpx] leading-8 text-slate-600">
+  <view class="card-shell progress-card">
+    <view class="progress-card__header">
+      <view class="progress-card__copy">
+        <view class="progress-card__eyebrow">
+          <text>Daily Quest Log</text>
+        </view>
+        <text class="block section-title">Today's energy loop</text>
+        <text class="block mt-[20rpx] text-[34rpx] leading-8 text-slate-600 font-700">
           Complete up to three valid check-ins today to lock in your streak.
-        </p>
-      </div>
+        </text>
+      </view>
 
-      <div class="rounded-full bg-brand-coral/12 px-16 py-10 text-[40rpx] font-700 text-brand-coral">
+      <view class="progress-card__meter-pill px-[32rpx] py-[20rpx] text-[40rpx] font-900">
         {{ props.validCheckIns }}/3
-      </div>
-    </div>
+      </view>
+    </view>
 
-    <div class="mt-18 grid grid-cols-3 gap-10">
-      <div
+    <view class="mt-[36rpx] flex gap-[20rpx]">
+      <view
         v-for="segment in progressSegments"
         :key="segment"
-        class="h-16 rounded-full transition"
+        class="h-[32rpx] flex-1 rounded-full"
         :class="segment <= props.validCheckIns ? 'bg-brand-teal' : 'bg-slate-200'"
       />
-    </div>
+    </view>
 
-    <div class="mt-18 flex flex-wrap items-center gap-12 text-[36rpx] text-slate-600">
-      <text class="chip-soft bg-brand-teal/15 text-brand-ink">
-        Weekly qualifying days: {{ props.qualifyingDays }}
-      </text>
-      <text
+    <view class="mt-[36rpx] flex flex-wrap items-center gap-[24rpx] text-[28rpx] text-slate-600 font-700">
+      <view class="chip-soft bg-brand-teal/15 text-brand-ink border-2 border-brand-teal/25">
+        <text>Weekly qualifying days: {{ props.qualifyingDays }}</text>
+      </view>
+      <view
         class="chip-soft"
-        :class="props.reminderEligible ? 'bg-brand-gold/20 text-brand-ink' : 'bg-slate-100 text-slate-500'"
+        :class="props.reminderEligible ? 'bg-brand-gold/20 text-brand-ink border-2 border-brand-gold/30' : 'bg-slate-100 text-slate-500 border-2 border-slate-200'"
       >
-        {{ props.reminderEligible ? '18:00 reminder still active' : 'Daily target completed' }}
-      </text>
-    </div>
-  </section>
+        <text>{{ props.reminderEligible ? '18:00 reminder still active' : 'Daily target completed' }}</text>
+      </view>
+    </view>
+  </view>
 </template>
+
+<style scoped>
+.progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: 36rpx;
+}
+
+.progress-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.progress-card__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.progress-card__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+  padding: 12rpx 20rpx;
+  border: 4rpx solid rgba(255, 211, 132, 0.24);
+  border-radius: 9999px;
+  background: rgba(255, 211, 132, 0.14);
+  color: #D97706;
+  font-size: 24rpx;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.progress-card__meter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 32rpx;
+  border: 4rpx solid rgba(255, 139, 139, 0.2);
+  border-radius: 9999px;
+  background: rgba(255, 139, 139, 0.12);
+  box-shadow: 0 6rpx 0 rgba(255, 139, 139, 0.14);
+  color: #FF8B8B;
+  font-size: 40rpx;
+  font-weight: 900;
+  white-space: nowrap;
+}
+</style>
