@@ -41,14 +41,14 @@ The registration form gains a required avatar section ahead of the existing prof
 
 The avatar section shows:
 
-- A preview circle with either the current avatar or a placeholder.
-- A WeChat avatar button when running in the WeChat Mini Program.
-- An image upload button that offers album or camera selection.
+- A single tappable preview circle area with either the current avatar or a placeholder.
+- A lightweight picker panel that appears after tapping the avatar area.
+- WeChat avatar, album, and camera choices inside that temporary panel.
 - Uploading and error states.
 
 Flow:
 
-1. The user selects a WeChat avatar or local image.
+1. The user taps the avatar area and chooses WeChat avatar, album, or camera from the temporary picker panel.
 2. The form immediately uploads the selected local path through `uploadAvatar(filePath)`.
 3. On success, the form stores the returned `avatarUrl` and `avatarSource`.
 4. On failure, the form blocks submission and shows a retryable error.
@@ -95,7 +95,7 @@ Responsibilities:
 
 Responsibilities:
 
-- Render preview, helper text, buttons, loading state, and error state.
+- Render the single avatar trigger, helper text, temporary picker panel, loading state, and error state.
 - Emit user intent upward.
 - Stay free of upload and store logic.
 
