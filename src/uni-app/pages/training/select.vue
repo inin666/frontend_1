@@ -21,36 +21,36 @@ function chooseMode(modality: TrainingModality) {
   <UniTrainingPageShell>
     <view class="card-shell select-page__hero-card">
       <view class="select-page__hero-tag">
-        <text>Session Arcade</text>
+        <text>训练游乐场</text>
       </view>
       <view class="select-page__hero-sticker">
         <text>🎮</text>
       </view>
-      <text class="section-title">Pick your session</text>
+      <text class="section-title">选择你的训练</text>
       <text class="select-page__hero-copy text-17 leading-7 text-slate-600">
-        Choose one playful training mode. Each card should feel like a mini game, not a bland form step.
+        选择一个有趣的训练模式，每个卡片都像一个小游戏，而不是普通的表单步骤。
       </text>
     </view>
 
     <TrainingModeCard
       accent-class="bg-brand-coral/16 text-brand-coral"
-      description="Camera-guided martial movement with split-screen feedback."
+      description="摄像头引导的武术动作，分屏反馈。"
       modality="wushu"
-      title="Wushu"
+      title="武术"
       @choose="chooseMode"
     />
     <TrainingModeCard
       accent-class="bg-brand-gold/22 text-brand-ink"
-      description="Fast, rhythmic intervals with live camera placeholders."
+      description="快速有节奏的间歇训练，带实时摄像头占位。"
       modality="hiit"
       title="HIIT"
       @choose="chooseMode"
     />
     <TrainingModeCard
       accent-class="bg-brand-teal/16 text-brand-ink"
-      description="A 30-second motion-sensor burst for stair-climbing practice."
+      description="30秒的运动传感器爆发，用于楼梯训练。"
       modality="stair"
-      title="Stair-climbing"
+      title="楼梯训练"
       @choose="chooseMode"
     />
   </UniTrainingPageShell>

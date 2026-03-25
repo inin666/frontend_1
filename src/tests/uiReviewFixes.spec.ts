@@ -196,7 +196,83 @@ describe('ui review fixes', () => {
     expect(growthIndexPage).toContain('uni.navigateTo')
     expect(growthIndexPage).toContain('.growth-page__link:active')
     expect(growthIndexPage).toContain('growth-page__link--current')
-    expect(metricsPage).toContain('Physical metrics will appear here after body-test data is imported.')
+    expect(metricsPage).toContain("const emptyStateHint = computed(() => metricsState.value.hasMetrics ? '' : metricsState.value.message)")
+    expect(metricsPage).toContain('{{ emptyStateHint }}')
+  })
+
+  it('keeps miniapp-facing localized copy fully in Chinese on shared access and growth surfaces', () => {
+    const growthIndexPage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages/growth/index.vue'),
+      'utf8'
+    )
+    const resultCard = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/QuestionnaireResultCard.vue'),
+      'utf8'
+    )
+    const registrationForm = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/RegistrationForm.vue'),
+      'utf8'
+    )
+    const physicalMetricsPanel = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/growth/PhysicalMetricsPanel.vue'),
+      'utf8'
+    )
+    const questionnaireFeature = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/features/access/questionnaire.ts'),
+      'utf8'
+    )
+    const cameraPlatform = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/platform/camera.ts'),
+      'utf8'
+    )
+    const sensorPlatform = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/platform/sensors.ts'),
+      'utf8'
+    )
+
+    expect(growthIndexPage).toContain('体能指标')
+    expect(growthIndexPage).toContain('历史记录')
+    expect(growthIndexPage).toContain('查看训练与问卷历史。')
+    expect(growthIndexPage).not.toContain('Physical Metrics')
+    expect(growthIndexPage).not.toContain('History')
+    expect(growthIndexPage).not.toContain('Open session and questionnaire history.')
+
+    expect(resultCard).toContain('优秀势头')
+    expect(resultCard).toContain('进步良好')
+    expect(resultCard).toContain('需要加强')
+    expect(resultCard).toContain('评估得分')
+    expect(resultCard).toContain('提交时间')
+    expect(resultCard).toContain('刚刚生成')
+    expect(resultCard).toContain('继续前往首页 ✨')
+    expect(resultCard).not.toContain('Excellent momentum')
+    expect(resultCard).not.toContain('Checkpoint score')
+    expect(resultCard).not.toContain('Submitted')
+    expect(resultCard).not.toContain('Continue to Home')
+
+    expect(registrationForm).toContain('基本信息')
+    expect(registrationForm).toContain('填写今天加入训练的同学信息。')
+    expect(registrationForm).toContain('请选择')
+    expect(registrationForm).toContain('健康指标')
+    expect(registrationForm).toContain('在训练开始前补充基础数据。')
+    expect(registrationForm).toContain('准备好了，出发！ 🚀')
+    expect(registrationForm).not.toContain('Basic Info')
+    expect(registrationForm).not.toContain('Health Metrics')
+    expect(registrationForm).not.toContain('Ready, Set, Go!')
+
+    expect(physicalMetricsPanel).not.toContain(".replace('Physical metrics will appear here after body-test data is imported.'")
+
+    expect(questionnaireFeature).toContain("baseline: '基线'")
+    expect(questionnaireFeature).toContain("week4: '第4周'")
+    expect(questionnaireFeature).toContain('我能在困难时刻保持冷静。')
+    expect(questionnaireFeature).toContain('我的睡眠质量能够支持日常训练和恢复。')
+    expect(questionnaireFeature).not.toContain("baseline: 'Baseline'")
+    expect(questionnaireFeature).not.toContain('I can stay calm during difficult moments.')
+
+    expect(cameraPlatform).toContain('力量很足，下一轮把落地再放轻一些。')
+    expect(cameraPlatform).toContain('控制得很好，继续放松肩膀。')
+    expect(cameraPlatform).not.toContain('Power is there')
+    expect(sensorPlatform).toContain('传感器采集很稳定，下一轮可以尝试把抬膝再提高一些。')
+    expect(sensorPlatform).not.toContain('Sensor capture stayed stable')
   })
 
   it('uses larger typography and stable action sizing for miniapp result and home surfaces', () => {

@@ -24,13 +24,13 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
   <UniGrowthPageShell>
     <view class="growth-page__header">
       <view class="growth-page__eyebrow">
-        <text>Progress Playground</text>
+        <text>成长乐园</text>
       </view>
-      <text class="growth-page__title">Growth Center</text>
+      <text class="growth-page__title">成长中心</text>
       <text class="growth-page__subtitle">
-        Track your training consistency, assessments, and achievements.
+        跟踪你的训练坚持度、评估和成就。
       </text>
-      <text class="growth-page__link growth-page__link--current">Current page</text>
+      <text class="growth-page__link growth-page__link--current">当前页面</text>
     </view>
 
     <GrowthSummaryCards
@@ -40,9 +40,9 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 
     <view class="growth-page__section growth-page__section-shell">
       <view class="growth-page__section-head">
-        <text class="growth-page__section-title">Adherence Calendar</text>
+        <text class="growth-page__section-title">达标日历</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('adherence')">
-          <text>View details</text>
+          <text>查看详情</text>
         </button>
       </view>
       <AdherenceHeatmap :days="summary.adherenceCalendar" />
@@ -50,9 +50,9 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 
     <view class="growth-page__section growth-page__section-shell">
       <view class="growth-page__section-head">
-        <text class="growth-page__section-title">Achievements</text>
+        <text class="growth-page__section-title">成就</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('achievements')">
-          <text>View details</text>
+          <text>查看详情</text>
         </button>
       </view>
       <AchievementBadgeList :achievements="summary.achievements" />
@@ -60,9 +60,9 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 
     <view class="growth-page__section growth-page__section-shell">
       <view class="growth-page__section-head">
-        <text class="growth-page__section-title">Physical Metrics</text>
+        <text class="growth-page__section-title">体能指标</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('metrics')">
-          <text>View details</text>
+          <text>查看详情</text>
         </button>
       </view>
       <PhysicalMetricsPanel :metrics-state="physicalMetricsState" />
@@ -70,12 +70,12 @@ function openDetailPage(page: 'adherence' | 'achievements' | 'metrics' | 'histor
 
     <view class="growth-page__section growth-page__section-shell">
       <view class="growth-page__section-head">
-        <text class="growth-page__section-title">History</text>
+        <text class="growth-page__section-title">历史记录</text>
         <button class="growth-page__link" type="button" @click="openDetailPage('history')">
-          <text>View details</text>
+          <text>查看详情</text>
         </button>
       </view>
-      <text class="growth-page__subtitle">Open session and questionnaire history.</text>
+      <text class="growth-page__subtitle">查看训练与问卷历史。</text>
     </view>
   </UniGrowthPageShell>
 </template>

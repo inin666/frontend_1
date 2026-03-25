@@ -14,15 +14,15 @@ const earnedCount = computed(() => summary.value.achievements.filter((badge) => 
   <UniGrowthPageShell>
     <view class="achievement-page__hero-card">
       <view class="achievement-page__eyebrow">
-        <text>Trophy Room</text>
+        <text>奖杯陈列室</text>
       </view>
       <view class="achievement-page__medal-sticker">
         <text>🏆</text>
       </view>
-      <text class="achievement-page__title">Achievements Detail</text>
-      <text class="achievement-page__subtitle">Motivational milestones based on participation and consistency.</text>
+      <text class="achievement-page__title">成就详情</text>
+      <text class="achievement-page__subtitle">基于参与和坚持的激励里程碑。</text>
       <view class="achievement-page__summary-pill">
-        <text>{{ earnedCount }} / {{ summary.achievements.length }} unlocked</text>
+        <text>{{ earnedCount }} / {{ summary.achievements.length }} 已解锁</text>
       </view>
     </view>
 

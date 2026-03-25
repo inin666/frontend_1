@@ -37,11 +37,11 @@ onShow(() => {
 
     <view class="card-shell home-page__hero">
       <view class="home-page__hero-tag">
-        <text>Daily Hub</text>
+        <text>每日中心</text>
       </view>
-      <text class="section-title">Choose your next exercise snack</text>
+      <text class="section-title">选择下一个训练</text>
       <text class="home-page__hero-copy">
-        Pick one playful session, finish it, and keep your streak moving.
+        选择一个有趣的训练，完成它，保持你的连续记录。
       </text>
     </view>
 
@@ -53,11 +53,11 @@ onShow(() => {
 
     <view class="card-shell p-[40rpx]">
       <view class="home-page__hero-tag home-page__hero-tag--teal">
-        <text>Quick Actions</text>
+        <text>快捷操作</text>
       </view>
-      <text class="block section-title mt-[20rpx]">Choose your next exercise snack</text>
+      <text class="block section-title mt-[20rpx]">选择下一个训练</text>
       <text class="block mt-[20rpx] text-[34rpx] leading-8 text-slate-600 font-700">
-        Mix Wushu, HIIT, and stair-climbing freely. Each finished guided flow counts.
+        武术、HIIT 和楼梯训练可自由组合，每完成一次引导训练都计入进度。
       </text>
 
       <view class="home-page__actions">
@@ -66,14 +66,14 @@ onShow(() => {
           hover-class="home-action--pressed"
           url="/pages/training/select"
         >
-          <text>Start training</text>
+          <text>开始训练</text>
         </navigator>
         <navigator
           class="home-action home-action--secondary"
           hover-class="home-action--pressed"
           url="/pages/growth/index"
         >
-          <text>Open growth</text>
+          <text>打开成长</text>
         </navigator>
       </view>
     </view>

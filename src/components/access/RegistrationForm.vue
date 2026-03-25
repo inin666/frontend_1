@@ -25,8 +25,8 @@ const form = reactive<RegistrationPayload>({
   restingHeartRate: 70
 })
 
-const genderOptions = ['Female', 'Male', 'Other']
-const gradeOptions = ['Year 1', 'Year 2', 'Year 3', 'Year 4']
+const genderOptions = ['女', '男', '其他']
+const gradeOptions = ['一年级', '二年级', '三年级', '四年级']
 
 const currentAvatarUrl = computed(() => unref(avatar.avatarUrl) ?? '')
 const currentAvatarSource = computed(() => unref(avatar.avatarSource) ?? '')
@@ -92,8 +92,8 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
     <view class="form-card form-card--gold">
       <view class="form-card__header">
         <view class="form-card__heading">
-          <text class="form-card__kicker form-card__kicker--gold">Basic Info</text>
-          <text class="form-card__title">Tell us who is joining today.</text>
+          <text class="form-card__kicker form-card__kicker--gold">基本信息</text>
+          <text class="form-card__title">填写今天加入训练的同学信息。</text>
         </view>
       </view>
 
@@ -107,18 +107,18 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
       />
       
       <view class="form-stack-field">
-        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Student ID</text>
-        <input v-model.trim="form.studentId" autocomplete="username" class="input-shell registration-input-shell" name="studentId" placeholder="E.g. S-001" />
+        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">学号</text>
+        <input v-model.trim="form.studentId" autocomplete="username" class="input-shell registration-input-shell" name="studentId" placeholder="例如：S-001" />
       </view>
 
       <view class="form-stack-field">
-        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Full Name</text>
-        <input v-model.trim="form.name" autocomplete="name" class="input-shell registration-input-shell" name="name" placeholder="E.g. Sporty Sam" />
+        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">姓名</text>
+        <input v-model.trim="form.name" autocomplete="name" class="input-shell registration-input-shell" name="name" placeholder="例如：运动小明" />
       </view>
 
       <view class="form-row">
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Gender</text>
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">性别</text>
           <picker
             class="registration-picker-shell"
             mode="selector"
@@ -127,25 +127,25 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
             @change="handleGenderChange"
           >
             <view class="input-shell registration-input-shell registration-input-shell--picker flex items-center">
-              {{ form.gender || 'Select' }}
+              {{ form.gender || '请选择' }}
             </view>
           </picker>
         </view>
         
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Age</text>
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">年龄</text>
           <input v-model.number="form.age" autocomplete="off" class="input-shell registration-input-shell" min="5" name="age" placeholder="12" type="number" />
         </view>
       </view>
       
       <view class="form-row">
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Major</text>
-          <input v-model.trim="form.major" autocomplete="organization-title" class="input-shell registration-input-shell" name="major" placeholder="Sci..." />
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">专业</text>
+          <input v-model.trim="form.major" autocomplete="organization-title" class="input-shell registration-input-shell" name="major" placeholder="理科..." />
         </view>
         
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Grade</text>
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">年级</text>
           <picker
             class="registration-picker-shell"
             mode="selector"
@@ -154,7 +154,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
             @change="handleGradeChange"
           >
             <view class="input-shell registration-input-shell registration-input-shell--picker flex items-center">
-              {{ form.grade || 'Select' }}
+              {{ form.grade || '请选择' }}
             </view>
           </picker>
         </view>
@@ -167,35 +167,35 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
           <text class="text-[40rpx]">💓</text>
         </view>
         <view class="form-card__heading">
-          <text class="form-card__kicker form-card__kicker--teal">Health Metrics</text>
-          <text class="form-card__title">Add a quick baseline before training starts.</text>
+          <text class="form-card__kicker form-card__kicker--teal">健康指标</text>
+          <text class="form-card__title">在训练开始前补充基础数据。</text>
         </view>
       </view>
 
       <view class="form-row">
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Height (cm)</text>
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">身高 (cm)</text>
           <input v-model.number="form.heightCm" autocomplete="off" class="input-shell registration-input-shell" min="1" name="heightCm" placeholder="160" type="number" />
         </view>
 
         <view class="form-row__field flex flex-col gap-[16rpx]">
-          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Weight (kg)</text>
+          <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">体重 (kg)</text>
           <input v-model.number="form.weightKg" autocomplete="off" class="input-shell registration-input-shell" min="1" name="weightKg" placeholder="50" type="number" />
         </view>
       </view>
 
       <view class="form-stack-field">
-        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">Resting HR (bpm)</text>
+        <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">静息心率 (bpm)</text>
         <input v-model.number="form.restingHeartRate" autocomplete="off" class="input-shell registration-input-shell" min="1" name="restingHeartRate" placeholder="70" type="number" />
       </view>
     </view>
 
     <view class="form-card__footer-note">
-      <text>Everything here only sets up your starting profile. You can refine it later.</text>
+      <text>这里的一切仅用于设置您的初始个人资料。您可以稍后完善它。</text>
     </view>
 
     <button form-type="submit" class="btn-primary mt-[24rpx] mb-[48rpx]" :disabled="!canSubmit">
-      <text class="tracking-wide">Ready, Set, Go! 🚀</text>
+      <text class="tracking-wide">准备好了，出发！ 🚀</text>
     </button>
   </form>
 </template>

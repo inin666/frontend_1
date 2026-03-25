@@ -13,11 +13,11 @@ const progressSegments = [1, 2, 3]
     <view class="progress-card__header">
       <view class="progress-card__copy">
         <view class="progress-card__eyebrow">
-          <text>Daily Quest Log</text>
+          <text>每日任务记录</text>
         </view>
-        <text class="block section-title">Today's energy loop</text>
+        <text class="block section-title">今日能量循环</text>
         <text class="block mt-[20rpx] text-[34rpx] leading-8 text-slate-600 font-700">
-          Complete up to three valid check-ins today to lock in your streak.
+          今日最多完成三次有效打卡以保持连续记录。
         </text>
       </view>
 
@@ -37,13 +37,13 @@ const progressSegments = [1, 2, 3]
 
     <view class="mt-[36rpx] flex flex-wrap items-center gap-[24rpx] text-[28rpx] text-slate-600 font-700">
       <view class="chip-soft bg-brand-teal/15 text-brand-ink border-2 border-brand-teal/25">
-        <text>Weekly qualifying days: {{ props.qualifyingDays }}</text>
+        <text>本周达标天数：{{ props.qualifyingDays }}</text>
       </view>
       <view
         class="chip-soft"
         :class="props.reminderEligible ? 'bg-brand-gold/20 text-brand-ink border-2 border-brand-gold/30' : 'bg-slate-100 text-slate-500 border-2 border-slate-200'"
       >
-        <text>{{ props.reminderEligible ? '18:00 reminder still active' : 'Daily target completed' }}</text>
+        <text>{{ props.reminderEligible ? '18:00提醒仍在进行' : '今日目标已完成' }}</text>
       </view>
     </view>
   </view>

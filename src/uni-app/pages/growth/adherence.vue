@@ -11,12 +11,12 @@ const summary = computed(() => buildGrowthSummary(store.getSnapshot()))
 
 <template>
   <UniGrowthPageShell>
-    <h1 class="detail-page__title">Adherence Detail</h1>
-    <p class="detail-page__subtitle">Day-level heatmap for recent training behavior.</p>
+    <h1 class="detail-page__title">达标详情</h1>
+    <p class="detail-page__subtitle">近期训练行为的日级热力图。</p>
 
     <section class="detail-page__card">
       <AdherenceHeatmap :days="summary.adherenceCalendar" />
-      <p class="detail-page__note">Each square represents one day. Darker means daily goal reached.</p>
+      <p class="detail-page__note">每个方块代表一天，颜色越深表示达标。</p>
     </section>
   </UniGrowthPageShell>
 </template>

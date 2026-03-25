@@ -1,7 +1,7 @@
 {
   "name": "sport-snack-student-app",
   "appid": "__UNI__SPORT_SNACK_STUDENT_APP",
-  "description": "Student miniapp shell for the uni-app migration.",
+  "description": "学生小程序外壳，用于 uni-app 迁移。",
   "versionName": "0.1.0",
   "versionCode": 1,
   "transformPx": false,

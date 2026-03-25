@@ -8,7 +8,7 @@ defineProps<{
 </script>
 
 <template>
-  <view class="summary-cards" aria-label="Growth summary cards">
+  <view class="summary-cards" aria-label="成长总结卡片">
     <view v-for="card in cards" :key="card.key" class="summary-card">
       <view class="summary-card__pill">
         <text class="summary-card__label">{{ card.label }}</text>
@@ -19,16 +19,16 @@ defineProps<{
 
     <view class="summary-card summary-card--assessment summary-card--highlight">
       <view class="summary-card__pill">
-        <text class="summary-card__label">Latest Assessment</text>
+        <text class="summary-card__label">最近评估</text>
       </view>
       <text class="summary-card__value">
-        {{ latestAssessment ? latestAssessment.checkpoint.toUpperCase() : 'No data yet' }}
+        {{ latestAssessment ? latestAssessment.checkpoint.toUpperCase() : '暂无数据' }}
       </text>
       <text class="summary-card__description">
         {{
           latestAssessment
-            ? `Score ${latestAssessment.score} (${latestAssessment.percentage}%)`
-            : 'Complete a long questionnaire to unlock this trend.'
+            ? `得分 ${latestAssessment.score}（${latestAssessment.percentage}%）`
+            : '完成长问卷后可解锁趋势。'
         }}
       </text>
     </view>

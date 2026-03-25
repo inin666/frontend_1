@@ -7,8 +7,8 @@ defineProps<{
 </script>
 
 <template>
-  <view class="history" aria-label="Training history">
-    <text v-if="sessions.length === 0" class="history__empty block">No completed sessions yet.</text>
+  <view class="history" aria-label="训练历史">
+    <text v-if="sessions.length === 0" class="history__empty block">暂无已完成训练。</text>
 
     <view v-else class="history__list">
       <view v-for="session in sessions" :key="session.id" class="history-item">
@@ -16,7 +16,7 @@ defineProps<{
           {{ session.modality.toUpperCase() }} · {{ session.date }}
         </text>
         <text class="history-item__subline block">{{ session.analysis.summary }}</text>
-        <text class="history-item__meta block">Quality score: {{ session.analysis.qualityScore }}</text>
+        <text class="history-item__meta block">质量分：{{ session.analysis.qualityScore }}</text>
       </view>
     </view>
   </view>

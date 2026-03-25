@@ -13,24 +13,24 @@ defineProps<{
         <text>🎉</text>
       </view>
       <view class="session-feedback-card__sticker">
-        <text>Awesome!</text>
+        <text>太棒了！</text>
       </view>
       <view class="chip-soft bg-brand-leaf/15 text-[#065F46] border-2 border-brand-leaf/25">
-        <text>Session completed</text>
+        <text>训练已完成</text>
       </view>
-      <text class="block text-[56rpx] font-900 text-brand-ink tracking-tight">{{ modalityLabel }} feedback</text>
+      <text class="block text-[56rpx] font-900 text-brand-ink tracking-tight">{{ modalityLabel }} 反馈</text>
       <text class="block text-[36rpx] leading-snug text-slate-600 font-700">
-        Completion is locked in. Quality feedback helps refine the next round.
+        完成已记录，质量反馈有助于优化下次训练。
       </text>
     </view>
 
     <view class="session-feedback-card__stats">
       <view class="session-feedback-card__score-tile">
-        <text class="block text-[24rpx] uppercase tracking-widest text-white/60 font-800">Quality score</text>
+        <text class="block text-[24rpx] uppercase tracking-widest text-white/60 font-800">质量分</text>
         <text class="block mt-[20rpx] text-[84rpx] font-900 text-white">{{ qualityScore }}</text>
       </view>
       <view class="session-feedback-card__summary-tile">
-        <text class="block text-[24rpx] uppercase tracking-widest text-[#2B7CB8] font-800">Encouragement</text>
+        <text class="block text-[24rpx] uppercase tracking-widest text-[#2B7CB8] font-800">鼓励</text>
         <text class="block mt-[16rpx] text-[32rpx] leading-snug text-brand-ink font-bold">{{ summary }}</text>
       </view>
     </view>

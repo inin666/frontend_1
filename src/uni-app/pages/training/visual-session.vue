@@ -16,7 +16,7 @@ onLoad((query) => {
   modality.value = nextModality === 'hiit' ? 'hiit' : 'wushu'
 })
 
-const title = computed(() => (modality.value === 'hiit' ? 'HIIT guided flow' : 'Wushu guided flow'))
+const title = computed(() => (modality.value === 'hiit' ? 'HIIT 引导训练' : '武术引导训练'))
 
 function finishSession() {
   const analysis = createCameraSessionAnalysis({
@@ -46,8 +46,8 @@ function interruptSession() {
 <template>
   <UniTrainingPageShell>
     <VisualTrainingPanel
-      :coach-label="`${title} coach`"
-      :learner-label="`${title} learner view`"
+      :coach-label="`${title} 教练`"
+      :learner-label="`${title} 学员视角`"
       :title="title"
       @complete="finishSession"
       @interrupt="interruptSession"

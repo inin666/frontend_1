@@ -37,17 +37,17 @@ function optionClasses(isSelected: boolean, palette: RatingOptionPalette) {
       <view class="inline-flex items-center justify-center p-[20rpx] rounded-full bg-brand-teal/15 text-[#4A90E2] mb-[20rpx] border-4 border-brand-teal/25">
         <text class="text-[56rpx]">🙂</text>
       </view>
-      <text class="block text-[44rpx] font-800 tracking-tight text-[#1A202C]">Post-session check-in</text>
+      <text class="block text-[44rpx] font-800 tracking-tight text-[#1A202C]">训练后打卡</text>
       <text class="block mt-[12rpx] text-[30rpx] font-700 text-[#64748B]">
-        Capture how the session felt before feedback appears.
+        在反馈出现前，记录本次训练的感受。
       </text>
     </view>
 
-    <!-- Energy Level -->
+    <!-- 能量水平 -->
     <view class="bg-white rounded-[32rpx] p-[40rpx] border-4 border-brand-gold/20 chunky-shadow">
       <view class="text-[36rpx] font-800 text-[#1A202C] leading-snug mb-[28rpx] tracking-tight flex items-center gap-[12rpx]">
         <text class="text-[#FFD384]">⚡</text>
-        <text>Energy Level</text>
+        <text>精力水平</text>
       </view>
       <view class="short-questionnaire-form__options">
         <view v-for="val in 5" :key="val" class="short-questionnaire-form__option" @click="handleFieldChange('energyLevel', val)">
@@ -58,11 +58,11 @@ function optionClasses(isSelected: boolean, palette: RatingOptionPalette) {
       </view>
     </view>
 
-    <!-- Confidence -->
+    <!-- 信心 -->
     <view class="bg-white rounded-[32rpx] p-[40rpx] border-4 border-brand-teal/20 chunky-shadow">
       <view class="text-[36rpx] font-800 text-[#1A202C] leading-snug mb-[28rpx] tracking-tight flex items-center gap-[12rpx]">
         <text class="text-[#4A90E2]">✔️</text>
-        <text>Movement Confidence</text>
+        <text>运动信心</text>
       </view>
       <view class="short-questionnaire-form__options">
         <view v-for="val in 5" :key="val" class="short-questionnaire-form__option" @click="handleFieldChange('confidence', val)">
@@ -73,11 +73,11 @@ function optionClasses(isSelected: boolean, palette: RatingOptionPalette) {
       </view>
     </view>
 
-    <!-- Enjoyment -->
+    <!-- 乐趣 -->
     <view class="bg-white rounded-[32rpx] p-[40rpx] border-4 border-brand-coral/20 chunky-shadow">
       <view class="text-[36rpx] font-800 text-[#1A202C] leading-snug mb-[28rpx] tracking-tight flex items-center gap-[12rpx]">
         <text class="text-[#FF6B6B]">❤️</text>
-        <text>Enjoyment</text>
+        <text>乐趣</text>
       </view>
       <view class="short-questionnaire-form__options">
         <view v-for="val in 5" :key="val" class="short-questionnaire-form__option" @click="handleFieldChange('enjoyment', val)">

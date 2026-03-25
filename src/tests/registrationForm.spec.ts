@@ -74,8 +74,8 @@ describe('registration form', () => {
           studentId: 'S-001',
           name: 'Lin',
           major: 'Sports Science',
-          gender: 'Female',
-          grade: 'Year 1',
+          gender: '女',
+          grade: '一年级',
           avatarUrl: 'https://cdn.example.com/avatar.png',
           avatarSource: 'wechat'
         })
