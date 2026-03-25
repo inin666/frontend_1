@@ -103,7 +103,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
         :error-message="currentAvatarErrorMessage"
         :is-wechat-mini-program="showWechatAvatarButton"
         @choose-wechat-avatar="avatar.handleWechatAvatarChoice"
-        @choose-image="avatar.openImageSourceActionSheet"
+        @choose-image-source="avatar.selectImageSource"
       />
       
       <view class="form-stack-field">

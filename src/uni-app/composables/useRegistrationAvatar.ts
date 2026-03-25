@@ -83,31 +83,6 @@ function chooseImage(source: Extract<AvatarSource, 'album' | 'camera'>) {
   })
 }
 
-function chooseImageSource() {
-  return new Promise<Extract<AvatarSource, 'album' | 'camera'> | null>((resolve, reject) => {
-    if (typeof uni === 'undefined') {
-      reject(new Error('Image selection is not available in this environment.'))
-      return
-    }
-
-    uni.showActionSheet({
-      itemList: ['Choose from album', 'Take a photo'],
-      success(result) {
-        resolve(result.tapIndex === 1 ? 'camera' : 'album')
-      },
-      fail(error) {
-        const errMsg = (error as { errMsg?: string }).errMsg ?? ''
-        if (errMsg.includes('cancel')) {
-          resolve(null)
-          return
-        }
-
-        reject(error)
-      }
-    })
-  })
-}
-
 export function uploadAvatar(filePath: string): Promise<UploadAvatarResult> {
   if (!configuredUploadUrl) {
     return Promise.resolve({ avatarUrl: filePath })
@@ -180,13 +155,7 @@ export function useRegistrationAvatar() {
     await persistAvatar(filePath, 'wechat')
   }
 
-  async function openImageSourceActionSheet() {
-    const source = await chooseImageSource()
-
-    if (!source) {
-      return
-    }
-
+  async function selectImageSource(source: Extract<AvatarSource, 'album' | 'camera'>) {
     const filePath = await chooseImage(source)
     await persistAvatar(filePath, source)
   }
@@ -198,6 +167,6 @@ export function useRegistrationAvatar() {
     errorMessage,
     isWechatMiniProgram,
     handleWechatAvatarChoice,
-    openImageSourceActionSheet
+    selectImageSource
   }
 }
