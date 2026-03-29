@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use `superpowers:executing-plans` to implement this plan task-by-task.
 
-**Goal:** Add a required registration avatar flow that uses a single tappable avatar trigger for WeChat avatar selection and album/camera upload, while preserving a clean upload adapter boundary for a future backend service.
+**Goal:** Add a required registration avatar flow that uses a single tappable avatar trigger for WeChat `chooseAvatar`, while preserving a clean upload adapter boundary for a future backend service.
 
 **Architecture:** Extend the shared student profile model with avatar fields, keep the register page thin, add a dedicated avatar field component for UI, and route all Mini Program media selection/upload logic through a single composable. Use TDD so submit-gating and state-model changes are proven before template and platform wiring are added.
 
@@ -81,7 +81,7 @@ Expected: FAIL because the form cannot yet render or merge avatar state into sub
 
 **Step 3: Write minimal implementation**
 
-Create the avatar field UI around a single avatar trigger, wire it to a dedicated avatar composable, and emit complete registration payloads with avatar fields included.
+Create the avatar field UI around a single `chooseAvatar` trigger, wire it to a dedicated avatar composable, and emit complete registration payloads with avatar fields included.
 
 **Step 4: Run test to verify it passes**
 
@@ -108,7 +108,7 @@ Expected: FAIL because the register flow does not yet contain the required Mini 
 
 **Step 3: Write minimal implementation**
 
-Use a single avatar trigger that opens a lightweight picker panel, keep the Mini Program `button` with `open-type="chooseAvatar"` inside that panel, read `detail.avatarUrl`, call `uni.chooseImage` for album/camera flows, and centralize upload behavior in `uploadAvatar(filePath)`.
+Use the avatar area itself as the Mini Program `button` with `open-type="chooseAvatar"`, read `detail.avatarUrl`, and centralize upload behavior in `uploadAvatar(filePath)`.
 
 **Step 4: Run test to verify it passes**
 
