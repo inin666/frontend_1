@@ -59,6 +59,30 @@
       "style": {
         "navigationBarTitleText": "成长记录"
       }
+    },
+    {
+      "path": "pages/growth/adherence",
+      "style": {
+        "navigationBarTitleText": "坚持情况"
+      }
+    },
+    {
+      "path": "pages/growth/achievements",
+      "style": {
+        "navigationBarTitleText": "成长徽章"
+      }
+    },
+    {
+      "path": "pages/growth/metrics",
+      "style": {
+        "navigationBarTitleText": "体能指标"
+      }
+    },
+    {
+      "path": "pages/growth/history",
+      "style": {
+        "navigationBarTitleText": "历史记录"
+      }
     }
   ],
   "globalStyle": {
