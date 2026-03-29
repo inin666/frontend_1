@@ -55,34 +55,6 @@ function parseUploadResponse(data: unknown) {
   return data
 }
 
-function chooseImage(source: Extract<AvatarSource, 'album' | 'camera'>) {
-  return new Promise<string>((resolve, reject) => {
-    if (typeof uni === 'undefined') {
-      reject(new Error('Image selection is not available in this environment.'))
-      return
-    }
-
-    uni.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: [source],
-      success(result) {
-        const filePath = result.tempFilePaths?.[0]
-
-        if (!filePath) {
-          reject(new Error('No image was selected.'))
-          return
-        }
-
-        resolve(filePath)
-      },
-      fail(error) {
-        reject(error)
-      }
-    })
-  })
-}
-
 export function uploadAvatar(filePath: string): Promise<UploadAvatarResult> {
   if (!configuredUploadUrl) {
     return Promise.resolve({ avatarUrl: filePath })
@@ -155,18 +127,12 @@ export function useRegistrationAvatar() {
     await persistAvatar(filePath, 'wechat')
   }
 
-  async function selectImageSource(source: Extract<AvatarSource, 'album' | 'camera'>) {
-    const filePath = await chooseImage(source)
-    await persistAvatar(filePath, source)
-  }
-
   return {
     avatarUrl,
     avatarSource,
     uploadState,
     errorMessage,
     isWechatMiniProgram,
-    handleWechatAvatarChoice,
-    selectImageSource
+    handleWechatAvatarChoice
   }
 }
