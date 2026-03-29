@@ -49,6 +49,8 @@ describe('registration avatar field', () => {
 
     expect(wrapper.find('.avatar-field').exists()).toBe(true)
     expect(wrapper.find('.avatar-field__preview-shell').exists()).toBe(true)
+    expect(wrapper.find('.avatar-field__preview-image').exists()).toBe(true)
     expect(wrapper.find('.avatar-field__content').exists()).toBe(false)
+    expect(wrapper.text()).not.toContain('添加照片')
   })
 })

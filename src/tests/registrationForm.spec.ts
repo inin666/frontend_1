@@ -29,7 +29,7 @@ function mountForm() {
 }
 
 async function fillValidProfileFields(wrapper: ReturnType<typeof mountForm>) {
-  await wrapper.get('input[name="studentId"]').setValue('S-001')
+  await wrapper.get('input[name="studentId"]').setValue('20260001')
   await wrapper.get('input[name="name"]').setValue('Lin')
   await wrapper.get('input[name="major"]').setValue('Sports Science')
 
@@ -47,13 +47,60 @@ describe('registration form', () => {
     avatarController.handleWechatAvatarChoice.mockReset()
   })
 
-  it('does not emit submit until avatar upload succeeds', async () => {
+  it('emits submit with a default avatar when no upload has happened', async () => {
     const wrapper = mountForm()
     await fillValidProfileFields(wrapper)
 
     await wrapper.get('form').trigger('submit')
 
+    expect(wrapper.emitted('submit')).toEqual([
+      [
+        expect.objectContaining({
+          studentId: '20260001',
+          name: 'Lin',
+          major: 'Sports Science',
+          gender: '女',
+          grade: '一年级',
+          avatarUrl: expect.any(String),
+          avatarSource: ''
+        })
+      ]
+    ])
+  })
+
+  it('does not emit submit when student id is not exactly 8 digits', async () => {
+    const wrapper = mountForm()
+    await fillValidProfileFields(wrapper)
+    await wrapper.get('input[name="studentId"]').setValue('2026000')
+
+    await wrapper.get('form').trigger('submit')
+
     expect(wrapper.emitted('submit')).toBeUndefined()
+  })
+
+  it('sanitizes numeric-only fields before submit', async () => {
+    const wrapper = mountForm()
+    await fillValidProfileFields(wrapper)
+
+    await wrapper.get('input[name="studentId"]').setValue('2026-0001abc')
+    await wrapper.get('input[name="age"]').setValue('12岁')
+    await wrapper.get('input[name="heightCm"]').setValue('170cm')
+    await wrapper.get('input[name="weightKg"]').setValue('55kg')
+    await wrapper.get('input[name="restingHeartRate"]').setValue('70bpm')
+
+    await wrapper.get('form').trigger('submit')
+
+    expect(wrapper.emitted('submit')).toEqual([
+      [
+        expect.objectContaining({
+          studentId: '20260001',
+          age: 12,
+          heightCm: 170,
+          weightKg: 55,
+          restingHeartRate: 70
+        })
+      ]
+    ])
   })
 
   it('emits avatar metadata once upload succeeds', async () => {
@@ -69,7 +116,7 @@ describe('registration form', () => {
     expect(wrapper.emitted('submit')).toEqual([
       [
         expect.objectContaining({
-          studentId: 'S-001',
+          studentId: '20260001',
           name: 'Lin',
           major: 'Sports Science',
           gender: '女',

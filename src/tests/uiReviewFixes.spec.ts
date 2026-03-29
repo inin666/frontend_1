@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -57,12 +57,16 @@ describe('ui review fixes', () => {
       'utf8'
     )
 
-    expect(file).toContain('input v-model.trim="form.studentId" autocomplete="username"')
+    expect(file).toContain('autocomplete="username"')
+    expect(file).toContain('inputmode="numeric"')
+    expect(file).toContain('maxlength="8"')
+    expect(file).toContain('@input="handleStudentIdInput"')
     expect(file).toContain('input v-model.trim="form.name" autocomplete="name"')
     expect(file).toContain('input v-model.trim="form.major" autocomplete="organization-title"')
-    expect(file).toContain('input v-model.number="form.heightCm" autocomplete="off"')
-    expect(file).toContain('input v-model.number="form.weightKg" autocomplete="off"')
-    expect(file).toContain('input v-model.number="form.restingHeartRate" autocomplete="off"')
+    expect(file).toContain("@input=\"handleNumericFieldInput('age', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('heightCm', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('weightKg', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('restingHeartRate', $event)\"")
     expect(file).toContain('mode="selector"')
     expect(file).toContain(':range="genderOptions"')
     expect(file).toContain(':range="gradeOptions"')
@@ -181,6 +185,43 @@ describe('ui review fixes', () => {
     expect(homePage).toContain('url="/pages/growth/index"')
     expect(selectionPage).toContain('uni.navigateTo')
     expect(feedbackPage).toContain('uni.redirectTo')
+  })
+
+  it('registers miniapp growth detail pages that the growth hub navigates to', () => {
+    const uniPagesManifest = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages.json'),
+      'utf8'
+    )
+    const rootPagesManifest = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/pages.json'),
+      'utf8'
+    )
+
+    expect(uniPagesManifest).toContain('"path": "pages/growth/adherence"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/achievements"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/metrics"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/history"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/adherence"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/achievements"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/metrics"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/history"')
+  })
+
+  it('keeps source wrapper pages for registered miniapp growth detail routes', () => {
+    const adherenceWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/adherence.vue'
+    const achievementsWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/achievements.vue'
+    const metricsWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/metrics.vue'
+    const historyWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/history.vue'
+
+    expect(existsSync(adherenceWrapper)).toBe(true)
+    expect(existsSync(achievementsWrapper)).toBe(true)
+    expect(existsSync(metricsWrapper)).toBe(true)
+    expect(existsSync(historyWrapper)).toBe(true)
+
+    expect(readFileSync(resolve(adherenceWrapper), 'utf8')).toContain("import GrowthAdherencePage from '../../uni-app/pages/growth/adherence.vue'")
+    expect(readFileSync(resolve(achievementsWrapper), 'utf8')).toContain("import GrowthAchievementsPage from '../../uni-app/pages/growth/achievements.vue'")
+    expect(readFileSync(resolve(metricsWrapper), 'utf8')).toContain("import GrowthMetricsPage from '../../uni-app/pages/growth/metrics.vue'")
+    expect(readFileSync(resolve(historyWrapper), 'utf8')).toContain("import GrowthHistoryPage from '../../uni-app/pages/growth/history.vue'")
   })
 
   it('preserves clear interactive affordance on growth detail navigation after migration', () => {
@@ -688,6 +729,23 @@ describe('ui review fixes', () => {
     expect(longQuestionnaireForm).toContain('gap: 40rpx;')
     expect(longQuestionnaireForm).toContain('margin-bottom: 40rpx;')
     expect(longQuestionnaireForm).toContain('padding-bottom: 72rpx;')
+  })
+
+  it('aligns the short post-training questionnaire with the shared questionnaire layout language', () => {
+    const shortQuestionnaireForm = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/training/ShortQuestionnaireForm.vue'),
+      'utf8'
+    )
+
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__hero')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__hero-badge')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__card')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__prompt')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__actions')
+    expect(shortQuestionnaireForm).toContain('请完成全部打卡项')
+    expect(shortQuestionnaireForm).toContain('提交打卡 ✨')
+    expect(shortQuestionnaireForm).not.toContain('Incomplete')
+    expect(shortQuestionnaireForm).not.toContain('Continue ✨')
   })
 
   it('relaxes shared shell and entry-page spacing across the app', () => {
