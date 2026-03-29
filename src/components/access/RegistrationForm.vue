@@ -103,7 +103,6 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
         :error-message="currentAvatarErrorMessage"
         :is-wechat-mini-program="showWechatAvatarButton"
         @choose-wechat-avatar="avatar.handleWechatAvatarChoice"
-        @choose-image-source="avatar.selectImageSource"
       />
       
       <view class="form-stack-field">
@@ -208,15 +207,13 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
 }
 
 .form-row__field {
-  flex: 1 1 240rpx;
+  flex: 1 1 0;
   min-width: 0;
 }
 
 .form-stack-field {
   display: flex;
   width: 100%;
-  max-width: 480rpx;
-  align-self: flex-start;
   flex-direction: column;
   gap: 16rpx;
 }
@@ -224,7 +221,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
 .registration-input-shell {
   width: 100%;
   max-width: 100%;
-  align-self: flex-start;
+  box-sizing: border-box;
 }
 
 .registration-input-shell--picker {
@@ -234,8 +231,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
 .registration-picker-shell {
   display: flex;
   width: 100%;
-  max-width: 520rpx;
-  align-self: flex-start;
+  box-sizing: border-box;
 }
 
 .form-card {
