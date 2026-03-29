@@ -59,7 +59,7 @@ export type PhysicalMetricsState =
 const CHECKPOINT_ORDER: CheckpointKey[] = ['baseline', 'week4', 'week8', 'week12']
 
 const PHYSICAL_METRICS_EMPTY_MESSAGE =
-  'Physical metrics will appear here after body-test data is imported.'
+  '导入体测数据后将在此显示体能指标。'
 
 export type GrowthStateSource = {
   sessions: readonly SessionRecord[]
@@ -89,27 +89,27 @@ export function buildGrowthSummary(state: GrowthStateSource): GrowthSummaryModel
     summaryCards: [
       {
         key: 'completed-sessions',
-        label: 'Completed Sessions',
+        label: '完成训练',
         value: String(completedCount),
-        description: 'Training sessions finished end-to-end.'
+        description: '已完整完成的训练次数。'
       },
       {
         key: 'valid-checkins',
-        label: 'Valid Check-ins',
+        label: '有效打卡',
         value: String(validCheckInCount),
-        description: 'Sessions counted toward adherence goals.'
+        description: '计入坚持目标的训练次数。'
       },
       {
         key: 'current-streak',
-        label: 'Current Streak',
-        value: `${streak} day${streak === 1 ? '' : 's'}`,
-        description: 'Consecutive days with completed sessions.'
+        label: '当前连续天数',
+        value: `${streak} 天`,
+        description: '连续完成训练的天数。'
       },
       {
         key: 'weekly-goal',
-        label: 'Weekly Goal',
-        value: state.weeklyAdherence.achieved ? 'Achieved' : 'In Progress',
-        description: `${state.weeklyAdherence.qualifyingDays} qualifying day${state.weeklyAdherence.qualifyingDays === 1 ? '' : 's'} this week.`
+        label: '每周目标',
+        value: state.weeklyAdherence.achieved ? '已达成' : '进行中',
+        description: `本周已达标 ${state.weeklyAdherence.qualifyingDays} 天。`
       }
     ],
     adherenceCalendar: buildAdherenceCalendar(completedSessions),
@@ -220,20 +220,20 @@ function buildAchievements(
   return [
     {
       id: 'starter',
-      title: 'Started Strong',
-      description: 'Complete your first training session.',
+      title: '起步有力',
+      description: '完成第一次训练。',
       earned: completedSessions >= 1
     },
     {
       id: 'momentum',
-      title: 'Momentum Builder',
-      description: 'Maintain a 3-day training streak.',
+      title: '势头建立者',
+      description: '保持连续 3 天训练。',
       earned: currentStreak >= 3
     },
     {
       id: 'assessment',
-      title: 'Assessment Explorer',
-      description: 'Finish at least one long questionnaire checkpoint.',
+      title: '评估探索者',
+      description: '至少完成一次长问卷评估。',
       earned: latestAssessment !== null
     }
   ]

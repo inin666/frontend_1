@@ -17,11 +17,11 @@ const emit = defineEmits<{
       <view>
         <text class="block section-title">{{ title }}</text>
         <text class="block mt-[16rpx] text-[28rpx] leading-snug text-slate-600 font-700">
-          Split-screen guidance mirrors the Mini Program camera flow.
+          分屏引导模拟小程序摄像头训练流程。
         </text>
       </view>
       <view class="chip-soft bg-brand-coral/16 text-brand-coral">
-        <text>AI overlay</text>
+        <text>AI 叠加</text>
       </view>
     </view>
 
@@ -42,14 +42,14 @@ const emit = defineEmits<{
         type="button"
         @click="emit('complete')"
       >
-        <text>Finish session</text>
+        <text>完成训练</text>
       </button>
       <button
         class="rounded-full border-none bg-slate-100 h-[108rpx] px-[40rpx] text-[30rpx] font-800 text-slate-600 shadow-[0_8rpx_0px_rgba(0,0,0,0.05)] active:translate-y-[4rpx] active:shadow-none transition-transform flex items-center justify-center"
         type="button"
         @click="emit('interrupt')"
       >
-        <text>Exit</text>
+        <text>退出</text>
       </button>
     </view>
   </view>

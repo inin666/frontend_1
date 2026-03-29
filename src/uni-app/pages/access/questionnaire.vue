@@ -48,8 +48,8 @@ function handleSubmit(payload: SubmissionPayload) {
 <template>
   <UniAccessPageShell
     chip="A2"
-    :title="`${checkpointLabel} Long Questionnaire`"
-    subtitle="This checkpoint assessment is required before you can continue to training."
+      :title="`${checkpointLabel} 长问卷`"
+      subtitle="完成本次评估后才能继续训练。"
   >
     <LongQuestionnaireForm
       :checkpoint="checkpoint"

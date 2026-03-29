@@ -6,7 +6,7 @@ export function createSensorSessionAnalysis(input: {
 
   return {
     qualityScore,
-    summary: 'Sensor capture stayed stable — try a slightly higher knee drive next round.',
+    summary: '传感器采集很稳定，下一轮可以尝试把抬膝再提高一些。',
     capturedBy: 'sensor' as const
   }
 }

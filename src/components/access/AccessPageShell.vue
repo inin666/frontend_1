@@ -22,10 +22,10 @@ defineProps<Props>()
         <view class="access-shell__title-card">
           <view class="access-shell__title-top">
             <view class="access-shell__chip-pill">
-              <text>{{ chip || 'Sports Snack' }}</text>
+              <text>{{ chip || '运动加餐' }}</text>
             </view>
             <view class="access-shell__spark-pill">
-              <text>Play Mode</text>
+              <text>趣味模式</text>
             </view>
           </view>
 

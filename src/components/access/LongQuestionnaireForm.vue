@@ -75,8 +75,8 @@ function optionClasses(isSelected: boolean) {
 
     <view class="long-questionnaire-form__actions">
       <button form-type="submit" class="btn-primary" :disabled="!isComplete">
-        <text v-if="!isComplete">Complete all questions First</text>
-        <text v-else>Submit Answers ✨</text>
+        <text v-if="!isComplete">请先完成所有问题</text>
+        <text v-else>提交答案 ✨</text>
       </button>
     </view>
   </form>

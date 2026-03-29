@@ -28,14 +28,14 @@ const session = computed(() => {
 
 const modalityLabel = computed(() => {
   if (!session.value) {
-    return 'Session'
+    return '训练'
   }
 
   return session.value.modality === 'stair'
-    ? 'Stair-climbing'
+    ? '楼梯训练'
     : session.value.modality === 'hiit'
       ? 'HIIT'
-      : 'Wushu'
+      : '武术'
 })
 
 function goHome() {
@@ -56,7 +56,7 @@ function goGrowthCenter() {
     <SessionFeedbackCard
       :modality-label="modalityLabel"
       :quality-score="session?.analysis.qualityScore ?? 0"
-      :summary="session?.analysis.summary ?? 'Great work finishing the guided flow.'"
+      :summary="session?.analysis.summary ?? '完成引导训练，干得漂亮！'"
     />
 
     <view class="feedback-page__actions">
@@ -65,14 +65,14 @@ function goGrowthCenter() {
         type="button"
         @click="goHome"
       >
-        <text>Back home</text>
+        <text>返回首页</text>
       </button>
       <button
         class="btn-secondary feedback-page__secondary-action"
         type="button"
         @click="goGrowthCenter"
       >
-        <text>Growth center</text>
+        <text>成长中心</text>
       </button>
     </view>
   </UniTrainingPageShell>

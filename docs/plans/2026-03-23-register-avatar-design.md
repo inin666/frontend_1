@@ -2,16 +2,13 @@
 
 **Date:** 2026-03-23
 
-**Goal:** Replace the registration form's emoji-style identity cue with a real avatar upload flow that supports WeChat avatar selection and album/camera image upload in the Mini Program, while keeping the upload boundary ready for a future backend API.
+**Goal:** Replace the registration form's emoji-style identity cue with a real avatar flow that uses only WeChat's `chooseAvatar` capability in the Mini Program, while keeping the upload boundary ready for a future backend API.
 
 ## Context
 
 The current registration flow in `/src/uni-app/pages/access/register.vue` delegates profile capture to `/src/components/access/RegistrationForm.vue`. The form currently captures only text and numeric profile data and emits it directly into the student store. There is no avatar field in `StudentProfile`, no upload adapter, and no persistence contract for media.
 
-The team wants to support two avatar acquisition paths during registration:
-
-- Use a WeChat avatar via Mini Program open capability.
-- Upload an image from album or camera.
+The team wants registration to use only the WeChat avatar capability.
 
 The backend upload API does not exist yet, but the frontend should be structured so that a real upload endpoint can be dropped in later without rewriting the form.
 
@@ -41,18 +38,18 @@ The registration form gains a required avatar section ahead of the existing prof
 
 The avatar section shows:
 
-- A preview circle with either the current avatar or a placeholder.
-- A WeChat avatar button when running in the WeChat Mini Program.
-- An image upload button that offers album or camera selection.
+- A single tappable preview circle area with either the current avatar or a placeholder.
+- The whole avatar area acts as the `chooseAvatar` trigger.
 - Uploading and error states.
 
 Flow:
 
-1. The user selects a WeChat avatar or local image.
-2. The form immediately uploads the selected local path through `uploadAvatar(filePath)`.
-3. On success, the form stores the returned `avatarUrl` and `avatarSource`.
-4. On failure, the form blocks submission and shows a retryable error.
-5. The registration submit button stays disabled until avatar upload succeeds and the rest of the form is valid.
+1. The user taps the avatar area.
+2. WeChat's `chooseAvatar` flow opens directly.
+3. The form immediately uploads the selected local path through `uploadAvatar(filePath)`.
+4. On success, the form stores the returned `avatarUrl` and `avatarSource`.
+5. On failure, the form blocks submission and shows a retryable error.
+6. The registration submit button stays disabled until avatar upload succeeds and the rest of the form is valid.
 
 ## Platform API Contract
 
@@ -60,7 +57,6 @@ Official WeChat documentation confirms the Mini Program avatar flow uses a `butt
 
 Official image and upload documentation confirms:
 
-- `wx.chooseImage` returns `tempFilePaths` local temporary paths and accepts `sourceType` values `album` and `camera`.
 - `wx.uploadFile` uploads a local `filePath` to a developer server and requires a multipart field `name`.
 
 Based on that, the frontend upload boundary will be:
@@ -95,7 +91,7 @@ Responsibilities:
 
 Responsibilities:
 
-- Render preview, helper text, buttons, loading state, and error state.
+- Render the single avatar trigger, helper text, loading state, and error state.
 - Emit user intent upward.
 - Stay free of upload and store logic.
 
@@ -143,9 +139,8 @@ Add registration-form behavior tests that prove:
 
 Update file-content assertions to keep the Mini Program wiring visible:
 
-- WeChat avatar button uses `open-type="chooseAvatar"`
+- the avatar trigger uses `open-type="chooseAvatar"`
 - the avatar callback reads `detail.avatarUrl`
-- image selection uses `uni.chooseImage`
 - the upload adapter uses `uni.uploadFile` or the placeholder endpoint branch
 
 ## Follow-Up For Backend Integration

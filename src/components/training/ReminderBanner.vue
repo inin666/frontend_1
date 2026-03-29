@@ -10,10 +10,10 @@ defineProps<{
     class="card-shell reminder-banner border-[8rpx] border-brand-gold/30 bg-brand-gold/10 text-brand-ink"
   >
     <view class="reminder-banner__eyebrow text-[36rpx] font-900 tracking-[0.16em] uppercase">
-      <text>Reminder return</text>
+      <text>提醒回归</text>
     </view>
     <text class="block mt-[16rpx] text-[32rpx] leading-snug font-700">
-      You came back from the 18:00 reminder. One more short session keeps today moving.
+      你已响应18:00提醒返回，再完成一次简短训练即可保持今日进度。
     </text>
   </view>
 </template>

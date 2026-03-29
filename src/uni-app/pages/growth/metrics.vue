@@ -7,18 +7,16 @@ import { useStudentStore } from '../../composables/useStudentStore'
 
 const store = useStudentStore()
 const metricsState = computed(() => resolvePhysicalMetricsState(store.getSnapshot()))
-const emptyStateHint = 'Physical metrics will appear here after body-test data is imported.'
+const emptyStateHint = computed(() => metricsState.value.hasMetrics ? '' : metricsState.value.message)
 </script>
 
 <template>
   <UniGrowthPageShell>
-    <h1 class="detail-page__title">Physical Metrics Detail</h1>
-    <p class="detail-page__subtitle">Imported body-test metrics and trend snapshots.</p>
+    <h1 class="detail-page__title">体能指标详情</h1>
+    <p class="detail-page__subtitle">导入的体测数据与趋势快照。</p>
 
     <section class="detail-page__card">
-      <p v-if="!metricsState.hasMetrics" class="detail-page__hint">
-        {{ emptyStateHint }}
-      </p>
+      <p v-if="!metricsState.hasMetrics" class="detail-page__hint">{{ emptyStateHint }}</p>
       <PhysicalMetricsPanel :metrics-state="metricsState" />
     </section>
   </UniGrowthPageShell>

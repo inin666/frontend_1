@@ -19,7 +19,7 @@ function badgeEmoji(id: string) {
 </script>
 
 <template>
-  <view class="badge-grid" aria-label="Achievement badges">
+  <view class="badge-grid" aria-label="成就徽章">
     <view
       v-for="badge in achievements"
       :key="badge.id"
@@ -30,7 +30,7 @@ function badgeEmoji(id: string) {
         <text class="badge__emoji">{{ badgeEmoji(badge.id) }}</text>
       </view>
       <view class="badge__status-pill" :class="badge.earned ? 'badge__status-pill--earned' : ''">
-        <text>{{ badge.earned ? 'Earned' : 'Locked' }}</text>
+        <text>{{ badge.earned ? '已获得' : '未解锁' }}</text>
       </view>
       <text class="badge__title">{{ badge.title }}</text>
       <text class="badge__description">{{ badge.description }}</text>

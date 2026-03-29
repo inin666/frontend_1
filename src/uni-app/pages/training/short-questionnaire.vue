@@ -21,7 +21,7 @@ function submitResponse(payload: { energyLevel: number; confidence: number; enjo
     <ShortQuestionnaireForm @submit="submitResponse" />
 
     <section v-if="latestResponse" class="card-shell p-18 text-14 text-slate-600">
-      Last response: energy {{ latestResponse.energyLevel }}, confidence {{ latestResponse.confidence }}, enjoyment {{ latestResponse.enjoyment }}
+      上次反馈：精力 {{ latestResponse.energyLevel }}，信心 {{ latestResponse.confidence }}，愉悦度 {{ latestResponse.enjoyment }}
     </section>
   </UniTrainingPageShell>
 </template>

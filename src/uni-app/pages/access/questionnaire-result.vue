@@ -36,8 +36,8 @@ function handleContinue() {
 <template>
   <UniAccessPageShell
     chip="A3"
-    title="Questionnaire Result"
-    subtitle="Your checkpoint result is ready. Review it, then continue to the daily hub."
+    title="问卷结果"
+    subtitle="评估结果已生成，请查阅后进入训练首页。"
   >
     <QuestionnaireResultCard
       :checkpoint="checkpoint"

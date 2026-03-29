@@ -1,7 +1,6 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
-import RegistrationForm from '../components/access/RegistrationForm.vue'
 
 vi.mock('../composables/useStudentAppState', () => ({
   useStudentAppState: () => ({
@@ -30,12 +29,16 @@ describe('ui review fixes', () => {
       'utf8'
     )
 
-    expect(file).toContain('input v-model.trim="form.studentId" autocomplete="username"')
+    expect(file).toContain('autocomplete="username"')
+    expect(file).toContain('inputmode="numeric"')
+    expect(file).toContain('maxlength="8"')
+    expect(file).toContain('@input="handleStudentIdInput"')
     expect(file).toContain('input v-model.trim="form.name" autocomplete="name"')
     expect(file).toContain('input v-model.trim="form.major" autocomplete="organization-title"')
-    expect(file).toContain('input v-model.number="form.heightCm" autocomplete="off"')
-    expect(file).toContain('input v-model.number="form.weightKg" autocomplete="off"')
-    expect(file).toContain('input v-model.number="form.restingHeartRate" autocomplete="off"')
+    expect(file).toContain("@input=\"handleNumericFieldInput('age', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('heightCm', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('weightKg', $event)\"")
+    expect(file).toContain("@input=\"handleNumericFieldInput('restingHeartRate', $event)\"")
     expect(file).toContain('mode="selector"')
     expect(file).toContain(':range="genderOptions"')
     expect(file).toContain(':range="gradeOptions"')
@@ -147,6 +150,43 @@ describe('ui review fixes', () => {
     expect(feedbackPage).toContain('uni.redirectTo')
   })
 
+  it('registers miniapp growth detail pages that the growth hub navigates to', () => {
+    const uniPagesManifest = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages.json'),
+      'utf8'
+    )
+    const rootPagesManifest = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/pages.json'),
+      'utf8'
+    )
+
+    expect(uniPagesManifest).toContain('"path": "pages/growth/adherence"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/achievements"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/metrics"')
+    expect(uniPagesManifest).toContain('"path": "pages/growth/history"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/adherence"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/achievements"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/metrics"')
+    expect(rootPagesManifest).toContain('"path": "pages/growth/history"')
+  })
+
+  it('keeps source wrapper pages for registered miniapp growth detail routes', () => {
+    const adherenceWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/adherence.vue'
+    const achievementsWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/achievements.vue'
+    const metricsWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/metrics.vue'
+    const historyWrapper = '/Users/pi-dal/Developer/sport-snack/src/pages/growth/history.vue'
+
+    expect(existsSync(adherenceWrapper)).toBe(true)
+    expect(existsSync(achievementsWrapper)).toBe(true)
+    expect(existsSync(metricsWrapper)).toBe(true)
+    expect(existsSync(historyWrapper)).toBe(true)
+
+    expect(readFileSync(resolve(adherenceWrapper), 'utf8')).toContain("import GrowthAdherencePage from '../../uni-app/pages/growth/adherence.vue'")
+    expect(readFileSync(resolve(achievementsWrapper), 'utf8')).toContain("import GrowthAchievementsPage from '../../uni-app/pages/growth/achievements.vue'")
+    expect(readFileSync(resolve(metricsWrapper), 'utf8')).toContain("import GrowthMetricsPage from '../../uni-app/pages/growth/metrics.vue'")
+    expect(readFileSync(resolve(historyWrapper), 'utf8')).toContain("import GrowthHistoryPage from '../../uni-app/pages/growth/history.vue'")
+  })
+
   it('preserves clear interactive affordance on growth detail navigation after migration', () => {
     const growthIndexPage = readFileSync(
       resolve('src/uni-app/pages/growth/index.vue'),
@@ -160,7 +200,83 @@ describe('ui review fixes', () => {
     expect(growthIndexPage).toContain('uni.navigateTo')
     expect(growthIndexPage).toContain('.growth-page__link:active')
     expect(growthIndexPage).toContain('growth-page__link--current')
-    expect(metricsPage).toContain('Physical metrics will appear here after body-test data is imported.')
+    expect(metricsPage).toContain("const emptyStateHint = computed(() => metricsState.value.hasMetrics ? '' : metricsState.value.message)")
+    expect(metricsPage).toContain('{{ emptyStateHint }}')
+  })
+
+  it('keeps miniapp-facing localized copy fully in Chinese on shared access and growth surfaces', () => {
+    const growthIndexPage = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/pages/growth/index.vue'),
+      'utf8'
+    )
+    const resultCard = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/QuestionnaireResultCard.vue'),
+      'utf8'
+    )
+    const registrationForm = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/RegistrationForm.vue'),
+      'utf8'
+    )
+    const physicalMetricsPanel = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/components/growth/PhysicalMetricsPanel.vue'),
+      'utf8'
+    )
+    const questionnaireFeature = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/features/access/questionnaire.ts'),
+      'utf8'
+    )
+    const cameraPlatform = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/platform/camera.ts'),
+      'utf8'
+    )
+    const sensorPlatform = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/src/uni-app/platform/sensors.ts'),
+      'utf8'
+    )
+
+    expect(growthIndexPage).toContain('体能指标')
+    expect(growthIndexPage).toContain('历史记录')
+    expect(growthIndexPage).toContain('查看训练与问卷历史。')
+    expect(growthIndexPage).not.toContain('Physical Metrics')
+    expect(growthIndexPage).not.toContain('History')
+    expect(growthIndexPage).not.toContain('Open session and questionnaire history.')
+
+    expect(resultCard).toContain('优秀势头')
+    expect(resultCard).toContain('进步良好')
+    expect(resultCard).toContain('需要加强')
+    expect(resultCard).toContain('评估得分')
+    expect(resultCard).toContain('提交时间')
+    expect(resultCard).toContain('刚刚生成')
+    expect(resultCard).toContain('继续前往首页 ✨')
+    expect(resultCard).not.toContain('Excellent momentum')
+    expect(resultCard).not.toContain('Checkpoint score')
+    expect(resultCard).not.toContain('Submitted')
+    expect(resultCard).not.toContain('Continue to Home')
+
+    expect(registrationForm).toContain('基本信息')
+    expect(registrationForm).toContain('填写今天加入训练的同学信息。')
+    expect(registrationForm).toContain('请选择')
+    expect(registrationForm).toContain('健康指标')
+    expect(registrationForm).toContain('在训练开始前补充基础数据。')
+    expect(registrationForm).toContain('准备好了，出发！ 🚀')
+    expect(registrationForm).not.toContain('Basic Info')
+    expect(registrationForm).not.toContain('Health Metrics')
+    expect(registrationForm).not.toContain('Ready, Set, Go!')
+
+    expect(physicalMetricsPanel).not.toContain(".replace('Physical metrics will appear here after body-test data is imported.'")
+
+    expect(questionnaireFeature).toContain("baseline: '基线'")
+    expect(questionnaireFeature).toContain("week4: '第4周'")
+    expect(questionnaireFeature).toContain('我能在困难时刻保持冷静。')
+    expect(questionnaireFeature).toContain('我的睡眠质量能够支持日常训练和恢复。')
+    expect(questionnaireFeature).not.toContain("baseline: 'Baseline'")
+    expect(questionnaireFeature).not.toContain('I can stay calm during difficult moments.')
+
+    expect(cameraPlatform).toContain('力量很足，下一轮把落地再放轻一些。')
+    expect(cameraPlatform).toContain('控制得很好，继续放松肩膀。')
+    expect(cameraPlatform).not.toContain('Power is there')
+    expect(sensorPlatform).toContain('传感器采集很稳定，下一轮可以尝试把抬膝再提高一些。')
+    expect(sensorPlatform).not.toContain('Sensor capture stayed stable')
   })
 
 
@@ -264,17 +380,25 @@ describe('ui review fixes', () => {
     expect(assessmentHistoryList).not.toContain('display: grid;')
   })
 
-  it('keeps registration inputs visually narrower than the surrounding card shell', () => {
+  it('lets registration inputs stretch to the available card width', () => {
     const registrationForm = readFileSync(
       resolve('src/components/access/RegistrationForm.vue'),
+      'utf8'
+    )
+    const unoConfig = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/uno.config.ts'),
       'utf8'
     )
 
     expect(registrationForm).toContain('registration-input-shell')
     expect(registrationForm).toContain('registration-picker-shell')
     expect(registrationForm).toContain('form-stack-field')
-    expect(registrationForm).toContain('max-width: 480rpx;')
-    expect(registrationForm).toContain('align-self: flex-start;')
+    expect(registrationForm).toContain('flex: 1 1 0;')
+    expect(registrationForm).toContain('width: 100%;')
+    expect(registrationForm).toContain('box-sizing: border-box;')
+    expect(unoConfig).toContain("'input-shell': 'w-full box-border")
+    expect(registrationForm).not.toContain('max-width: 480rpx;')
+    expect(registrationForm).not.toContain('max-width: 520rpx;')
     expect(registrationForm).not.toContain('class="w-full"')
   })
 
@@ -371,6 +495,62 @@ describe('ui review fixes', () => {
     expect(longQuestionnaireForm).toContain('padding-bottom: 72rpx;')
   })
 
+  it('aligns the short post-training questionnaire with the shared questionnaire layout language', () => {
+    const shortQuestionnaireForm = readFileSync(
+      resolve('src/components/training/ShortQuestionnaireForm.vue'),
+      'utf8'
+    )
+
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__hero')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__hero-badge')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__card')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__prompt')
+    expect(shortQuestionnaireForm).toContain('short-questionnaire-form__actions')
+    expect(shortQuestionnaireForm).toContain('请完成全部打卡项')
+    expect(shortQuestionnaireForm).toContain('提交打卡 ✨')
+    expect(shortQuestionnaireForm).not.toContain('Incomplete')
+    expect(shortQuestionnaireForm).not.toContain('Continue ✨')
+  })
+
+  it('relaxes shared shell and entry-page spacing across the miniapp surfaces', () => {
+    const accessShell = readFileSync(
+      resolve('src/components/access/AccessPageShell.vue'),
+      'utf8'
+    )
+    const uniAccessShell = readFileSync(
+      resolve('src/uni-app/components/access/UniAccessPageShell.vue'),
+      'utf8'
+    )
+    const uniTrainingShell = readFileSync(
+      resolve('src/uni-app/components/training/UniTrainingPageShell.vue'),
+      'utf8'
+    )
+    const uniGrowthShell = readFileSync(
+      resolve('src/uni-app/components/growth/UniGrowthPageShell.vue'),
+      'utf8'
+    )
+    const miniappHomePage = readFileSync(
+      resolve('src/uni-app/pages/training/home.vue'),
+      'utf8'
+    )
+    const miniappGrowthPage = readFileSync(
+      resolve('src/uni-app/pages/growth/index.vue'),
+      'utf8'
+    )
+
+    expect(accessShell).toContain('padding: 56rpx 48rpx 216rpx;')
+    expect(accessShell).toContain('gap: 56rpx;')
+    expect(uniAccessShell).toContain('padding: 56rpx 48rpx 120rpx;')
+    expect(uniAccessShell).toContain('gap: 40rpx;')
+    expect(uniTrainingShell).toContain('padding: 56rpx 32rpx 96rpx;')
+    expect(uniTrainingShell).toContain('gap: 36rpx;')
+    expect(uniGrowthShell).toContain('padding: 56rpx 32rpx 96rpx;')
+    expect(uniGrowthShell).toContain('gap: 40rpx;')
+    expect(miniappHomePage).toContain('gap: 28rpx;')
+    expect(miniappHomePage).toContain('margin-top: 44rpx;')
+    expect(miniappGrowthPage).toContain('gap: 28rpx;')
+    expect(miniappGrowthPage).toContain('padding: 40rpx;')
+  })
 
   it('wires the register avatar flow to WeChat avatar and image upload APIs', () => {
     const avatarField = readFileSync(
@@ -382,12 +562,17 @@ describe('ui review fixes', () => {
       'utf8'
     )
 
+    expect(avatarField).toContain('avatar-field__trigger')
+    expect(avatarField).toContain('justify-content: center;')
+    expect(avatarField).not.toContain('avatar-field__content')
+    expect(avatarField).not.toContain('avatar-field__picker-panel')
+    expect(avatarField).not.toContain('avatar-field__actions')
     expect(avatarField).toContain('open-type="chooseAvatar"')
     expect(avatarField).toContain('@chooseavatar=')
     expect(avatarComposable).toContain('detail?.avatarUrl')
-    expect(avatarComposable).toContain('uni.chooseImage')
-    expect(avatarComposable).toContain('sourceType: [source]')
     expect(avatarComposable).toContain('uni.uploadFile')
     expect(avatarComposable).toContain("name: 'file'")
+    expect(avatarComposable).not.toContain('uni.chooseImage')
+    expect(avatarComposable).not.toContain('selectImageSource')
   })
 })

@@ -18,7 +18,7 @@ const metrics = computed(() => hasPhysicalMetrics(props.metricsState) ? props.me
 </script>
 
 <template>
-  <view class="metrics" aria-label="Physical metrics panel">
+  <view class="metrics" aria-label="身体指标面板">
     <text v-if="!hasMetrics" class="metrics__empty">{{ emptyMessage }}</text>
 
     <view v-for="metric in metrics" :key="metric.label" class="metric-card">
@@ -27,7 +27,7 @@ const metrics = computed(() => hasPhysicalMetrics(props.metricsState) ? props.me
         <text class="metric-card__unit">{{ metric.unit }}</text>
       </view>
 
-      <view class="metric-card__trend" aria-label="Metric trend values">
+      <view class="metric-card__trend" aria-label="指标趋势值">
         <text v-for="(value, index) in metric.values" :key="index" class="metric-card__point">
           {{ value }}
         </text>

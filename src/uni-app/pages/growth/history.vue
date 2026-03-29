@@ -18,16 +18,16 @@ const questionnaires = computed(() => store.getSnapshot().longQuestionnaires)
 
 <template>
   <UniGrowthPageShell>
-    <h1 class="detail-page__title">Training & Assessment History</h1>
-    <p class="detail-page__subtitle">Session highlights and long-questionnaire checkpoints.</p>
+    <h1 class="detail-page__title">训练与评估历史</h1>
+    <p class="detail-page__subtitle">训练亮点与长问卷评估点。</p>
 
     <section class="detail-page__card">
-      <h2 class="detail-page__heading">Training Sessions</h2>
+      <h2 class="detail-page__heading">训练记录</h2>
       <TrainingHistoryList :sessions="completedSessions" />
     </section>
 
     <section class="detail-page__card">
-      <h2 class="detail-page__heading">Long Questionnaires</h2>
+      <h2 class="detail-page__heading">长问卷</h2>
       <AssessmentHistoryList :questionnaires="questionnaires" />
     </section>
   </UniGrowthPageShell>

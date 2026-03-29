@@ -14,18 +14,18 @@ export interface LongQuestionnaireSubmission {
 }
 
 export const CHECKPOINT_LABELS: Record<CheckpointKey, string> = {
-  baseline: 'Baseline',
-  week4: 'Week 4',
-  week8: 'Week 8',
-  week12: 'Week 12'
+  baseline: '基线',
+  week4: '第4周',
+  week8: '第8周',
+  week12: '第12周'
 }
 
 const SHARED_LONG_QUESTIONS: LongQuestion[] = [
-  { id: 'stress-control', prompt: 'I can stay calm during difficult moments.' },
-  { id: 'focus', prompt: 'I can keep my attention on one task for a long period.' },
-  { id: 'sleep-quality', prompt: 'My sleep quality supports daily training and recovery.' },
-  { id: 'motivation', prompt: 'I feel motivated to continue the training plan.' },
-  { id: 'confidence', prompt: 'I feel confident about my physical and mental progress.' }
+  { id: 'stress-control', prompt: '我能在困难时刻保持冷静。' },
+  { id: 'focus', prompt: '我能在较长时间内把注意力集中在一件事情上。' },
+  { id: 'sleep-quality', prompt: '我的睡眠质量能够支持日常训练和恢复。' },
+  { id: 'motivation', prompt: '我有动力继续完成训练计划。' },
+  { id: 'confidence', prompt: '我对自己的身心进步有信心。' }
 ]
 
 export const LONG_QUESTIONNAIRES: Record<CheckpointKey, LongQuestion[]> = {
@@ -60,4 +60,3 @@ export function evaluateLongQuestionnaire(
     submittedAt: new Date().toISOString()
   }
 }
-

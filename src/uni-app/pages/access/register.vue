@@ -23,8 +23,8 @@ function handleSubmit(payload: RegistrationPayload) {
 <template>
   <UniAccessPageShell
     chip="A1"
-    title="Registration"
-    subtitle="Complete your profile first. Training is locked until registration is complete."
+    title="注册"
+    subtitle="请先完善个人信息，注册完成后才能解锁训练。"
   >
     <RegistrationForm @submit="handleSubmit" />
   </UniAccessPageShell>
