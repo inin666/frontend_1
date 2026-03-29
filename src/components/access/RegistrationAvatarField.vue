@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { DEFAULT_AVATAR_URL } from '../../constants/defaultAvatar'
 import type { AvatarUploadState } from '../../uni-app/composables/useRegistrationAvatar'
 
 const props = defineProps<{
@@ -11,6 +13,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   chooseWechatAvatar: [event: { detail?: { avatarUrl?: string } }]
 }>()
+
+const previewUrl = computed(() => props.avatarUrl.trim() || DEFAULT_AVATAR_URL)
 </script>
 
 <template>
@@ -23,15 +27,14 @@ const emit = defineEmits<{
     <view class="avatar-field">
       <view class="avatar-field__preview-shell">
         <image
-          v-if="props.avatarUrl"
+          v-if="previewUrl"
           class="avatar-field__preview-image"
-          :src="props.avatarUrl"
+          :src="previewUrl"
           mode="aspectFill"
         />
-        <text v-else-if="props.uploadState === 'uploading'" class="avatar-field__preview-placeholder">
+        <text v-if="props.uploadState === 'uploading'" class="avatar-field__preview-placeholder">
           上传中
         </text>
-        <text v-else class="avatar-field__preview-placeholder">添加照片</text>
       </view>
     </view>
   </button>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, unref } from 'vue'
 import type { StudentProfile } from '../../domain/student/types'
+import { DEFAULT_AVATAR_URL } from '../../constants/defaultAvatar'
 import RegistrationAvatarField from './RegistrationAvatarField.vue'
 import { useRegistrationAvatar } from '../../uni-app/composables/useRegistrationAvatar'
 
@@ -33,6 +34,7 @@ const currentAvatarSource = computed(() => unref(avatar.avatarSource) ?? '')
 const currentAvatarUploadState = computed(() => unref(avatar.uploadState) ?? 'idle')
 const currentAvatarErrorMessage = computed(() => unref(avatar.errorMessage) ?? '')
 const showWechatAvatarButton = computed(() => Boolean(unref(avatar.isWechatMiniProgram)))
+const resolvedAvatarUrl = computed(() => currentAvatarUrl.value.trim() || DEFAULT_AVATAR_URL)
 
 const selectedGenderIndex = computed(() => {
   const index = genderOptions.indexOf(form.gender)
@@ -46,15 +48,54 @@ const selectedGradeIndex = computed(() => {
   return index >= 0 ? index : 0
 })
 
+function readInputValue(event: Event | { detail?: { value?: string | number }; target?: { value?: string | number } }) {
+  const nextEvent = event as {
+    detail?: { value?: unknown }
+    target?: EventTarget | { value?: unknown } | null
+  }
+
+  const detailValue = nextEvent.detail?.value
+  if (typeof detailValue === 'string' || typeof detailValue === 'number') {
+    return String(detailValue)
+  }
+
+  const targetValue = (nextEvent.target as { value?: unknown } | null | undefined)?.value
+  if (typeof targetValue === 'string' || typeof targetValue === 'number') {
+    return String(targetValue)
+  }
+
+  return ''
+}
+
+function sanitizeDigits(value: string, maxLength?: number) {
+  const digitsOnly = value.replace(/\D/g, '')
+
+  return typeof maxLength === 'number'
+    ? digitsOnly.slice(0, maxLength)
+    : digitsOnly
+}
+
+function handleStudentIdInput(event: Event | { detail?: { value?: string | number }; target?: { value?: string | number } }) {
+  form.studentId = sanitizeDigits(readInputValue(event), 8)
+}
+
+function handleNumericFieldInput(
+  field: 'age' | 'heightCm' | 'weightKg' | 'restingHeartRate',
+  event: Event | { detail?: { value?: string | number }; target?: { value?: string | number } }
+) {
+  const digits = sanitizeDigits(readInputValue(event))
+
+  form[field] = digits.length > 0 ? Number(digits) : 0
+}
+
 const canSubmit = computed(() => {
   return (
-    form.studentId.trim().length > 0 &&
+    /^\d{8}$/.test(form.studentId) &&
     form.name.trim().length > 0 &&
     form.gender.trim().length > 0 &&
     form.major.trim().length > 0 &&
     form.grade.trim().length > 0 &&
-    currentAvatarUrl.value.trim().length > 0 &&
-    currentAvatarUploadState.value === 'success' &&
+    currentAvatarUploadState.value !== 'uploading' &&
     form.age > 0 &&
     form.heightCm > 0 &&
     form.weightKg > 0 &&
@@ -69,7 +110,7 @@ function handleSubmit() {
 
   emit('submit', {
     ...form,
-    avatarUrl: currentAvatarUrl.value,
+    avatarUrl: resolvedAvatarUrl.value,
     avatarSource: currentAvatarSource.value
   })
 }
@@ -98,7 +139,7 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
       </view>
 
       <RegistrationAvatarField
-        :avatar-url="currentAvatarUrl"
+        :avatar-url="resolvedAvatarUrl"
         :upload-state="currentAvatarUploadState"
         :error-message="currentAvatarErrorMessage"
         :is-wechat-mini-program="showWechatAvatarButton"
@@ -107,7 +148,17 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
       
       <view class="form-stack-field">
         <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">学号</text>
-        <input v-model.trim="form.studentId" autocomplete="username" class="input-shell registration-input-shell" name="studentId" placeholder="例如：S-001" />
+        <input
+          :value="form.studentId"
+          autocomplete="username"
+          class="input-shell registration-input-shell"
+          inputmode="numeric"
+          maxlength="8"
+          name="studentId"
+          placeholder="例如：20260001"
+          type="text"
+          @input="handleStudentIdInput"
+        />
       </view>
 
       <view class="form-stack-field">
@@ -133,7 +184,17 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
         
         <view class="form-row__field flex flex-col gap-[16rpx]">
           <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">年龄</text>
-          <input v-model.number="form.age" autocomplete="off" class="input-shell registration-input-shell" min="5" name="age" placeholder="12" type="number" />
+          <input
+            :value="String(form.age)"
+            autocomplete="off"
+            class="input-shell registration-input-shell"
+            inputmode="numeric"
+            maxlength="3"
+            name="age"
+            placeholder="12"
+            type="text"
+            @input="handleNumericFieldInput('age', $event)"
+          />
         </view>
       </view>
       
@@ -174,18 +235,48 @@ function handleGradeChange(event: { detail?: { value?: string | number } }) {
       <view class="form-row">
         <view class="form-row__field flex flex-col gap-[16rpx]">
           <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">身高 (cm)</text>
-          <input v-model.number="form.heightCm" autocomplete="off" class="input-shell registration-input-shell" min="1" name="heightCm" placeholder="160" type="number" />
+          <input
+            :value="String(form.heightCm)"
+            autocomplete="off"
+            class="input-shell registration-input-shell"
+            inputmode="numeric"
+            maxlength="3"
+            name="heightCm"
+            placeholder="160"
+            type="text"
+            @input="handleNumericFieldInput('heightCm', $event)"
+          />
         </view>
 
         <view class="form-row__field flex flex-col gap-[16rpx]">
           <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">体重 (kg)</text>
-          <input v-model.number="form.weightKg" autocomplete="off" class="input-shell registration-input-shell" min="1" name="weightKg" placeholder="50" type="number" />
+          <input
+            :value="String(form.weightKg)"
+            autocomplete="off"
+            class="input-shell registration-input-shell"
+            inputmode="numeric"
+            maxlength="3"
+            name="weightKg"
+            placeholder="50"
+            type="text"
+            @input="handleNumericFieldInput('weightKg', $event)"
+          />
         </view>
       </view>
 
       <view class="form-stack-field">
         <text class="text-[28rpx] font-800 text-[#1A202C] ml-[12rpx]">静息心率 (bpm)</text>
-        <input v-model.number="form.restingHeartRate" autocomplete="off" class="input-shell registration-input-shell" min="1" name="restingHeartRate" placeholder="70" type="number" />
+        <input
+          :value="String(form.restingHeartRate)"
+          autocomplete="off"
+          class="input-shell registration-input-shell"
+          inputmode="numeric"
+          maxlength="3"
+          name="restingHeartRate"
+          placeholder="70"
+          type="text"
+          @input="handleNumericFieldInput('restingHeartRate', $event)"
+        />
       </view>
     </view>
 
