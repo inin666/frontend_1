@@ -8,8 +8,7 @@ const avatarController = {
   uploadState: 'idle' as 'idle' | 'uploading' | 'success' | 'error',
   errorMessage: '',
   isWechatMiniProgram: true,
-  handleWechatAvatarChoice: vi.fn(),
-  selectImageSource: vi.fn()
+  handleWechatAvatarChoice: vi.fn()
 }
 
 vi.mock('../uni-app/composables/useRegistrationAvatar', () => ({
@@ -46,7 +45,6 @@ describe('registration form', () => {
     avatarController.uploadState = 'idle'
     avatarController.errorMessage = ''
     avatarController.handleWechatAvatarChoice.mockReset()
-    avatarController.selectImageSource.mockReset()
   })
 
   it('does not emit submit until avatar upload succeeds', async () => {

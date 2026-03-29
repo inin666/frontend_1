@@ -448,17 +448,25 @@ describe('ui review fixes', () => {
     expect(assessmentHistoryList).not.toContain('display: grid;')
   })
 
-  it('keeps registration inputs visually narrower than the surrounding card shell', () => {
+  it('lets registration inputs stretch to the available card width', () => {
     const registrationForm = readFileSync(
       resolve('/Users/pi-dal/Developer/sport-snack/src/components/access/RegistrationForm.vue'),
+      'utf8'
+    )
+    const unoConfig = readFileSync(
+      resolve('/Users/pi-dal/Developer/sport-snack/uno.config.ts'),
       'utf8'
     )
 
     expect(registrationForm).toContain('registration-input-shell')
     expect(registrationForm).toContain('registration-picker-shell')
     expect(registrationForm).toContain('form-stack-field')
-    expect(registrationForm).toContain('max-width: 480rpx;')
-    expect(registrationForm).toContain('align-self: flex-start;')
+    expect(registrationForm).toContain('flex: 1 1 0;')
+    expect(registrationForm).toContain('width: 100%;')
+    expect(registrationForm).toContain('box-sizing: border-box;')
+    expect(unoConfig).toContain("'input-shell': 'w-full box-border")
+    expect(registrationForm).not.toContain('max-width: 480rpx;')
+    expect(registrationForm).not.toContain('max-width: 520rpx;')
     expect(registrationForm).not.toContain('class="w-full"')
   })
 
@@ -752,15 +760,16 @@ describe('ui review fixes', () => {
     )
 
     expect(avatarField).toContain('avatar-field__trigger')
-    expect(avatarField).toContain('avatar-field__picker-panel')
+    expect(avatarField).toContain('justify-content: center;')
+    expect(avatarField).not.toContain('avatar-field__content')
+    expect(avatarField).not.toContain('avatar-field__picker-panel')
     expect(avatarField).not.toContain('avatar-field__actions')
     expect(avatarField).toContain('open-type="chooseAvatar"')
     expect(avatarField).toContain('@chooseavatar=')
     expect(avatarComposable).toContain('detail?.avatarUrl')
-    expect(avatarComposable).toContain('uni.chooseImage')
-    expect(avatarComposable).toContain('function selectImageSource')
-    expect(avatarComposable).toContain('sourceType: [source]')
     expect(avatarComposable).toContain('uni.uploadFile')
     expect(avatarComposable).toContain("name: 'file'")
+    expect(avatarComposable).not.toContain('uni.chooseImage')
+    expect(avatarComposable).not.toContain('selectImageSource')
   })
 })
